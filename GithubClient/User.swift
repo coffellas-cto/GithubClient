@@ -18,7 +18,7 @@ class User: NSManagedObject {
     @NSManaged var htmlUrl: String
     @NSManaged var publicRepos: Int16
     @NSManaged var updateDate: String
-    @NSManaged var avatarLocalPath: String
-    @NSManaged var repos: NSSet
+    @NSManaged var avatarLocalPath: String?
+    @NSManaged var repos: NSSet?
 
 }

@@ -20,6 +20,6 @@ class Repo: NSManagedObject {
     @NSManaged var updateDate: String
     @NSManaged var language: String
     @NSManaged var stargazersCount: Int16
-    @NSManaged var user: User
+    @NSManaged var user: User?
 
 }
