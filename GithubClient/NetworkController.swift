@@ -11,7 +11,7 @@ import Foundation
 var kGithubClientDefaultTimeout: NSTimeInterval = 10
 
 extension Dictionary {
-    func encodeDictionaryForHTTPBody() -> NSData? {
+    func encodedStringForHTTPBody() -> String? {
         var retVal: NSData? = nil
         var partsArray = NSMutableArray()
         for (key, value) in self {
@@ -28,15 +28,36 @@ extension Dictionary {
             }
         }
         
-        let encodedDictionary = partsArray.componentsJoinedByString("&")
-        return encodedDictionary.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        return partsArray.componentsJoinedByString("&")
+    }
+}
+
+extension NSURL {
+    func dictionaryFromURL() -> NSDictionary {
+        let queryString: NSString = self.query!
+        let stringPairs = queryString.componentsSeparatedByString("&")
+        var keyValuePairs = NSMutableDictionary()
+        for pair in stringPairs {
+            let bits = pair.componentsSeparatedByString("=")
+            if bits.count > 1 {
+                let key = (bits[0] as NSString).stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                let value = (bits[1] as NSString).stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+                keyValuePairs.setObject(value!, forKey: key!)
+            }
+        }
+        
+        return keyValuePairs
     }
 }
 
 class NetworkController {
     
-    // MARK: Private Properties
-    private var sharedSession = NSURLSession.sharedSession()
+    // MARK: Public Properties
+    /**
+    Use with caution. Change only before starting th actual calls on a singleton.
+    */
+    var session = NSURLSession.sharedSession()
+    var baseURL: String?
     
     // MARK: Class Properties
     class var controller: NetworkController {
@@ -55,19 +76,42 @@ class NetworkController {
         
     }
     
-    func performRequestWithURLString(URLString: String, method: String = "GET", parameters: [NSString: NSString]? = nil, completion: (data: NSData!, errorString: String!) -> Void) {
+    // MARK: Public Methods
+    
+    func performRequestWithURLPath(URLPath: String, method: String = "GET", parameters: [NSString: NSString]? = nil, acceptJSONResponse: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
+        if let baseURL = baseURL {
+            performRequestWithURLString(baseURL.stringByAppendingPathComponent(URLPath), method: method, parameters: parameters, acceptJSONResponse: acceptJSONResponse, completion: completion)
+        }
+        else {
+            completion(data: nil, errorString: "Base URL not set")
+        }
+    }
+    
+    func performRequestWithURLString(URLString: String, method: String = "GET", parameters: [NSString: NSString]? = nil, acceptJSONResponse: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
         let URL = NSURL(string: URLString)!
         let request = NSMutableURLRequest(URL: URL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: kGithubClientDefaultTimeout)
         request.HTTPMethod = method
         if parameters != nil {
-            if let bodyData = parameters!.encodeDictionaryForHTTPBody() {
-                request.HTTPBody = bodyData
-                request.setValue("\(bodyData.length)", forHTTPHeaderField: "Content-Length")
-                request.setValue("application/x-www-form-urlencoded charset=utf-8", forHTTPHeaderField: "Content-Type")
+            if let encodedString = parameters!.encodedStringForHTTPBody() {
+                switch method {
+                    case "POST", "PUT", "DELETE":
+                        if let bodyData = encodedString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                            request.HTTPBody = bodyData
+                            request.setValue("\(bodyData.length)", forHTTPHeaderField: "Content-Length")
+                            request.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+                            if acceptJSONResponse {
+                                request.setValue("application/json", forHTTPHeaderField: "Accept")
+                            }
+                        }
+                    default:
+                        let URL = NSURL(string: URLString + "?" + encodedString)
+                        request.URL = URL
+                        break
+                }
             }
         }
         
-        sharedSession.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+        session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if error != nil {
                     completion(data: nil, errorString: error.localizedDescription)

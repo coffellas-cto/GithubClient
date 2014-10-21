@@ -15,12 +15,14 @@
 		9A1B9C3019F56BF600C022C0 /* GithubClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C2F19F56BF600C022C0 /* GithubClientTests.swift */; };
 		9A1B9C3A19F5A1D500C022C0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */; };
 		9A1B9C3D19F5A22500C022C0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C3C19F5A22500C022C0 /* DetailsViewController.swift */; };
+		9A52278219F6CEF600BE45C0 /* GithubNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A52278119F6CEF600BE45C0 /* GithubNetworking.swift */; };
 		9A54CE5119F622C800D77AC8 /* Repo+GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A54CE5019F622C800D77AC8 /* Repo+GithubClient.swift */; };
 		9A54CE5319F622D700D77AC8 /* User+GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A54CE5219F622D700D77AC8 /* User+GithubClient.swift */; };
 		9A57F29419F5BFB100EFEC8F /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A57F29319F5BFB100EFEC8F /* NetworkController.swift */; };
 		9AA463F519F5F7BC00D3D9CC /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F419F5F7BC00D3D9CC /* Repo.swift */; };
 		9AA463F719F5F88B00D3D9CC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F619F5F88B00D3D9CC /* User.swift */; };
 		9AA463F919F6028300D3D9CC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F819F6028300D3D9CC /* CoreDataManager.swift */; };
+		9AAF911A19F705BA000DF765 /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF911919F705BA000DF765 /* PrivateConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,12 +48,14 @@
 		9A1B9C2F19F56BF600C022C0 /* GithubClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubClientTests.swift; sourceTree = "<group>"; };
 		9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		9A1B9C3C19F5A22500C022C0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		9A52278119F6CEF600BE45C0 /* GithubNetworking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubNetworking.swift; sourceTree = "<group>"; };
 		9A54CE5019F622C800D77AC8 /* Repo+GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Repo+GithubClient.swift"; sourceTree = "<group>"; };
 		9A54CE5219F622D700D77AC8 /* User+GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+GithubClient.swift"; sourceTree = "<group>"; };
 		9A57F29319F5BFB100EFEC8F /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		9AA463F419F5F7BC00D3D9CC /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		9AA463F619F5F88B00D3D9CC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9AA463F819F6028300D3D9CC /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		9AAF911919F705BA000DF765 /* PrivateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				9A1B9C1519F56BF600C022C0 /* Info.plist */,
+				9AAF911919F705BA000DF765 /* PrivateConstants.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			children = (
 				9A57F29319F5BFB100EFEC8F /* NetworkController.swift */,
 				9AA463F819F6028300D3D9CC /* CoreDataManager.swift */,
+				9A52278119F6CEF600BE45C0 /* GithubNetworking.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -281,10 +287,12 @@
 				9A1B9C1719F56BF600C022C0 /* AppDelegate.swift in Sources */,
 				9A54CE5119F622C800D77AC8 /* Repo+GithubClient.swift in Sources */,
 				9A54CE5319F622D700D77AC8 /* User+GithubClient.swift in Sources */,
+				9AAF911A19F705BA000DF765 /* PrivateConstants.swift in Sources */,
 				9A1B9C3A19F5A1D500C022C0 /* MenuViewController.swift in Sources */,
 				9A1B9C1A19F56BF600C022C0 /* GithubClient.xcdatamodeld in Sources */,
 				9A1B9C3D19F5A22500C022C0 /* DetailsViewController.swift in Sources */,
 				9AA463F919F6028300D3D9CC /* CoreDataManager.swift in Sources */,
+				9A52278219F6CEF600BE45C0 /* GithubNetworking.swift in Sources */,
 				9AA463F719F5F88B00D3D9CC /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

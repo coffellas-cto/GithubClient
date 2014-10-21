@@ -27,6 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "menuTapped", name: "githubClientNotificationShowMenu", object: nil)
         
+        if let accessToken = NSUserDefaults.standardUserDefaults().objectForKey("accessToken") as? String {
+            GithubNetworking.controller.setAccessToken(accessToken)
+        }
+        else {
+            dispatch_after(100, dispatch_get_main_queue()) { () -> Void in
+                GithubNetworking.controller.requestOAuthAccess()
+            }
+        }
+        
         // Setup main View Controllers
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         menuVC = storyboard.instantiateViewControllerWithIdentifier("MENU_VC") as MenuViewController
@@ -54,6 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         window.rootViewController = containerViewController
         window.makeKeyAndVisible()
         return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        GithubNetworking.controller.processOAuthCallbackURL(url)
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {
