@@ -27,7 +27,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         default:
             title = ""
         }
-        cell.textLabel?.text = title
+        cell.textLabel.text = title
         return cell
     }
     
