@@ -68,9 +68,10 @@ class GithubNetworking: NetworkController {
         
         session = NSURLSession(configuration: configuration)
         
-        searchForReposContaining(queryString: "tiny") { (responseDic, errorString) -> Void in
-            println(responseDic)
-        }
+//        searchForReposContaining(queryString: "tiny") { (responseDic, errorString) -> Void in
+//            println(responseDic)
+//            println(errorString)
+//        }
     }
     
     func requestOAuthAccess() {

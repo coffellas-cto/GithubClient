@@ -39,11 +39,11 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         var notificationName: String!
         switch indexPath.row {
         case 0:
-            notificationName = "githubClientNotificationShowRepos"
+            notificationName = kNotificationGithubClientShowRepos
         case 1:
-            notificationName = "githubClientNotificationShowUsers"
+            notificationName = kNotificationGithubClientShowUsers
         case 2:
-            notificationName = "githubClientNotificationShowProfile"
+            notificationName = kNotificationGithubClientShowProfile
         default:
             notificationName = ""
         }

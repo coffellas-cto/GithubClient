@@ -1,21 +1,25 @@
 //
-//  DetailsViewController.swift
+//  ReposViewController.swift
 //  GithubClient
 //
-//  Created by Alex G on 20.10.14.
+//  Created by Alex G on 21.10.14.
 //  Copyright (c) 2014 Alexey Gordiyenko. All rights reserved.
 //
 
 import UIKit
 
-class DetailsViewController: UIViewController {
-    @IBAction func menuTapped(sender: AnyObject) {
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "githubClientNotificationShowMenu", object: nil))
-    }
+class ReposViewController: BaseViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     // MARK: UIViewController Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Repos"
+        
+        searchBar.delegate = self
 
         // Do any additional setup after loading the view.
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Menu View Controller-->
@@ -46,57 +46,44 @@
             </objects>
             <point key="canvasLocation" x="73" y="-49"/>
         </scene>
-        <!--Details View Controller-->
-        <scene sceneID="tUR-mW-VUL">
+        <!--Repos View Controller-->
+        <scene sceneID="KqM-1c-VCt">
             <objects>
-                <viewController storyboardIdentifier="DETAILS_VC" id="a47-k0-w1H" customClass="DetailsViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="REPOS_VC" id="c93-ga-DI9" customClass="ReposViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sfN-fx-nP1"/>
-                        <viewControllerLayoutGuide type="bottom" id="35u-rh-CRR"/>
+                        <viewControllerLayoutGuide type="top" id="8QE-LE-HlJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="uEd-zy-mCw"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="acf-vJ-2F3">
+                    <view key="view" contentMode="scaleToFill" id="AfN-AP-dd2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JSF-0r-3RS">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ZpN-0x-chS"/>
-                                    <constraint firstAttribute="height" constant="64" id="u2b-Jg-Icy"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Title" id="rqn-Zl-P0Z">
-                                        <barButtonItem key="leftBarButtonItem" title="Menu" id="n99-TI-V42">
-                                            <connections>
-                                                <action selector="menuTapped:" destination="a47-k0-w1H" id="nI1-vW-Pu9"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ZpN-0x-chS"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="ZpN-0x-chS"/>
-                                        <exclude reference="u2b-Jg-Icy"/>
-                                    </mask>
-                                </variation>
-                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6zn-Y8-8wl">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <searchBar key="tableFooterView" contentMode="redraw" id="KAt-bh-oOh">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JSF-0r-3RS" firstAttribute="leading" secondItem="acf-vJ-2F3" secondAttribute="leading" id="E0Z-hw-Kn2"/>
-                            <constraint firstAttribute="trailing" secondItem="JSF-0r-3RS" secondAttribute="trailing" id="nv3-Nc-8Hr"/>
-                            <constraint firstItem="JSF-0r-3RS" firstAttribute="top" secondItem="acf-vJ-2F3" secondAttribute="top" id="tda-PR-Iqu"/>
+                            <constraint firstItem="6zn-Y8-8wl" firstAttribute="top" secondItem="AfN-AP-dd2" secondAttribute="top" id="2xp-D6-lQB"/>
+                            <constraint firstItem="6zn-Y8-8wl" firstAttribute="leading" secondItem="AfN-AP-dd2" secondAttribute="leading" id="Kj3-pL-PPf"/>
+                            <constraint firstAttribute="trailing" secondItem="6zn-Y8-8wl" secondAttribute="trailing" id="nhl-p5-rN2"/>
+                            <constraint firstItem="uEd-zy-mCw" firstAttribute="top" secondItem="6zn-Y8-8wl" secondAttribute="bottom" id="pRP-bz-3sc"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="searchBar" destination="KAt-bh-oOh" id="2Ec-ei-iCy"/>
+                        <outlet property="table" destination="6zn-Y8-8wl" id="UZy-Ee-jEq"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SlQ-rW-Jxp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GX7-Gx-QM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="743" y="-49"/>
+            <point key="canvasLocation" x="947" y="-49"/>
         </scene>
     </scenes>
 </document>
