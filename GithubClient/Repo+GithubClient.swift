@@ -17,19 +17,19 @@ extension Repo {
             return nil
         }
         
+        return repoFromNSDictionary(dic)
+    }
+    
+    class func repoFromNSDictionary(dic: NSDictionary) -> Repo? {
         let id = dic["id"] as Int!
         if id == nil {
             return nil
         }
         
-        return repoFromNSDictionary(dic)
-    }
-    
-    class func repoFromNSDictionary(dic: NSDictionary) -> Repo? {
         var retVal: Repo!
         var mustUpdate = true
         
-        let resultsArray = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", NSNumber(integer: dic["id"] as Int))
+        let resultsArray = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", NSNumber(integer: id))
         if (resultsArray != nil) && (resultsArray?.count > 0) {
             retVal = resultsArray!.first as? Repo
             if let updateDate = dic["updated_at"] as String? {
@@ -41,7 +41,7 @@ extension Repo {
         }
         
         if mustUpdate && retVal != nil {
-            retVal.id = Int64(dic["id"] as Int)
+            retVal.id = Int64(id)
             retVal.name = dic["name"] as String
             retVal.fullName = dic["full_name"] as String
             retVal.htmlUrl = dic["html_url"] as String

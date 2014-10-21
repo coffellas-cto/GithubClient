@@ -17,19 +17,19 @@ extension User {
             return nil
         }
         
+        return userFromNSDictionary(dic)
+    }
+    
+    class func userFromNSDictionary(dic: NSDictionary) -> User? {
         let id = dic["id"] as Int!
         if id == nil {
             return nil
         }
         
-        return userFromNSDictionary(dic)
-    }
-    
-    class func userFromNSDictionary(dic: NSDictionary) -> User? {
         var retVal: User!
         var mustUpdate = true
         
-        let resultsArray = CoreDataManager.manager.fetchObjectsWithEntityClass(User.classForCoder(), predicateFormat: "id == %@", NSNumber(integer: dic["id"] as Int))
+        let resultsArray = CoreDataManager.manager.fetchObjectsWithEntityClass(User.classForCoder(), predicateFormat: "id == %@", NSNumber(integer: id))
         if (resultsArray != nil) && (resultsArray?.count > 0) {
             retVal = resultsArray!.first as? User
             if let updateDate = dic["updated_at"] as String? {
@@ -41,7 +41,7 @@ extension User {
         }
         
         if mustUpdate && retVal != nil {
-            retVal.id = Int64(dic["id"] as Int)
+            retVal.id = Int64(id)
             retVal.updateDate = dic["updated_at"] as String
             retVal.login = dic["login"] as String
             retVal.apiUrl = dic["url"] as String
