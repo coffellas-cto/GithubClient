@@ -11,7 +11,8 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var window: UIWindow!
+    
     // MARK: UIApplication Life Cycle
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {        
         
@@ -26,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Set up Window
-        var window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window.rootViewController = ViewControllersMediator.mediator.containerViewController
         window.makeKeyAndVisible()
         return true
