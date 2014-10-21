@@ -68,35 +68,37 @@ class NetworkController {
         }
         
         sharedSession.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
-            if error != nil {
-                completion(data: nil, errorString: error.localizedDescription)
-                return
-            }
-            
-            let HTTPResponse = response as NSHTTPURLResponse
-            var errorString: String?
-            switch HTTPResponse.statusCode {
-            case 200...299:
-                break
-            case 400...499:
-                errorString = "Client error"
-            case 500...599:
-                errorString = "Server error"
-            default:
-                errorString = "Unknown error"
-            }
-            
-            if let errorString = errorString {
-                completion(data: nil, errorString: "\(errorString): \(HTTPResponse.statusCode)")
-                return
-            }
-            
-            if data == nil {
-                completion(data: nil, errorString: "Fatal error! Request succeed, but data is nil!")
-                return
-            }
-            
-            completion(data: data, errorString: nil)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if error != nil {
+                    completion(data: nil, errorString: error.localizedDescription)
+                    return
+                }
+                
+                let HTTPResponse = response as NSHTTPURLResponse
+                var errorString: String?
+                switch HTTPResponse.statusCode {
+                case 200...299:
+                    break
+                case 400...499:
+                    errorString = "Client error"
+                case 500...599:
+                    errorString = "Server error"
+                default:
+                    errorString = "Unknown error"
+                }
+                
+                if let errorString = errorString {
+                    completion(data: nil, errorString: "\(errorString): \(HTTPResponse.statusCode)")
+                    return
+                }
+                
+                if data == nil {
+                    completion(data: nil, errorString: "Fatal error! Request succeed, but data is nil!")
+                    return
+                }
+                
+                completion(data: data, errorString: nil)
+            })
         }).resume()
     }
 }
