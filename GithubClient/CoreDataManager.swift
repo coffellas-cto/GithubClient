@@ -12,6 +12,9 @@ import CoreData
 class CoreDataManager {
     
     // MARK: Class Properties
+    /**
+    Returns a singleton object of CoreDataManager type.
+    */
     class var manager: CoreDataManager {
         struct Struct {
             static var token: dispatch_once_t = 0
@@ -23,19 +26,93 @@ class CoreDataManager {
         return Struct.instance
     }
     
+    // MARK: Public Methods
+    
+    /**
+    Creates, configures, and returns an instance of the class for the entity with a name from a given class.
+    
+    :param: entityClass The class of the entity to be created.
+    
+    :return: A new, autoreleased, fully configured instance of the class for the entity named after entityClass name. Returns nil if an attempt to get the entity name fails.
+    */
+    
+    func newObjectForEntityClass(entityClass: AnyClass) -> AnyObject? {
+        let entityName = entityNameFromClass(entityClass)
+        if entityName == nil {
+            return nil
+        }
+        
+        return NSEntityDescription.insertNewObjectForEntityForName(entityName!, inManagedObjectContext: managedObjectContext)
+    }
+    
+    /**
+    Returns an array of objects that meet the criteria specified by a given predicate format.
+    
+    :param: entityClass The class of the entity to be created. Call classForCoder() on a needed class, if you provide predicateFormat parameter.
+    :param: predicateFormat The format string for the new predicate.
+    :param: argList The arguments to substitute into predicateFormat. Use NSObjects for these arguments.
+    
+    :return: An array of objects that meet the criteria specified by a given predicate format. Returns nil if an attempt to get the entity name fails.
+    */
+    
+    func fetchObjectsWithEntityClass(entityClass: AnyClass, predicateFormat: String? = nil, _ argList: CVarArgType...) -> [AnyObject]? {
+        let entityName = entityNameFromClass(entityClass)
+        if entityName == nil {
+            return nil
+        }
+        
+        let fetchRequest = NSFetchRequest(entityName: entityName!)
+        if predicateFormat != nil {
+            let args = getVaList(argList)
+            fetchRequest.predicate = NSPredicate(format: predicateFormat!, arguments: args)
+        }
+        
+        var error: NSError?
+        let retVal = managedObjectContext?.executeFetchRequest(fetchRequest, error: &error)
+        
+        if let error = error {
+            println("Error fetching \(fetchRequest.predicate?.predicateFormat): \(error.localizedDescription)")
+        }
+        
+        return retVal
+    }
+    
+    /**
+    Attempts to save the main managed object context asynchronously. Crashes on error.
+    */
+    func saveContext () {
+        if let moc = self.managedObjectContext {
+            var error: NSError? = nil
+            if moc.hasChanges && !moc.save(&error) {
+                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                abort()
+            }
+        }
+    }
+    
+    // MARK: Private Methods
+    private func entityNameFromClass(entityClass: AnyClass) -> String? {
+        let retVal = NSStringFromClass(entityClass).componentsSeparatedByString(".").last
+        if retVal == nil {
+            println("Error. Couldn't get entity name from class \(NSStringFromClass(entityClass))")
+        }
+        
+        return retVal
+    }
+    
     // MARK: - Core Data stack
     
-    lazy var applicationDocumentsDirectory: NSURL = {
+    private lazy var applicationDocumentsDirectory: NSURL = {
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls.last as NSURL
         }()
     
-    lazy var managedObjectModel: NSManagedObjectModel = {
+    private lazy var managedObjectModel: NSManagedObjectModel = {
         let modelURL = NSBundle.mainBundle().URLForResource("GithubClient", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
         }()
     
-    lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+    private lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("GithubClient.sqlite")
@@ -56,7 +133,7 @@ class CoreDataManager {
         return coordinator
         }()
     
-    lazy var managedObjectContext: NSManagedObjectContext? = {
+    private lazy var managedObjectContext: NSManagedObjectContext! = {
         let coordinator = self.persistentStoreCoordinator
         if coordinator == nil {
             return nil
@@ -65,17 +142,5 @@ class CoreDataManager {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
-    
-    // MARK: - Core Data Saving support
-    
-    func saveContext () {
-        if let moc = self.managedObjectContext {
-            var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
-            }
-        }
-    }
 
 }
