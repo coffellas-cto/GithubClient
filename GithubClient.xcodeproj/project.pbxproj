@@ -15,6 +15,7 @@
 		9A1B9C3019F56BF600C022C0 /* GithubClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C2F19F56BF600C022C0 /* GithubClientTests.swift */; };
 		9A1B9C3A19F5A1D500C022C0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */; };
 		9A1B9C3D19F5A22500C022C0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1B9C3C19F5A22500C022C0 /* DetailsViewController.swift */; };
+		9A57F29419F5BFB100EFEC8F /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A57F29319F5BFB100EFEC8F /* NetworkController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		9A1B9C2F19F56BF600C022C0 /* GithubClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubClientTests.swift; sourceTree = "<group>"; };
 		9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		9A1B9C3C19F5A22500C022C0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		9A57F29319F5BFB100EFEC8F /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				9A1B9C1419F56BF600C022C0 /* Supporting Files */,
 				9A1B9C4019F5B94100C022C0 /* Views */,
 				9A1B9C3B19F5A1E200C022C0 /* View Controllers */,
+				9A57F29519F5BFB500EFEC8F /* Controllers */,
 			);
 			path = GithubClient;
 			sourceTree = "<group>";
@@ -132,6 +135,14 @@
 			children = (
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		9A57F29519F5BFB500EFEC8F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9A57F29319F5BFB100EFEC8F /* NetworkController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A57F29419F5BFB100EFEC8F /* NetworkController.swift in Sources */,
 				9A1B9C1719F56BF600C022C0 /* AppDelegate.swift in Sources */,
 				9A1B9C3A19F5A1D500C022C0 /* MenuViewController.swift in Sources */,
 				9A1B9C1A19F56BF600C022C0 /* GithubClient.xcdatamodeld in Sources */,
