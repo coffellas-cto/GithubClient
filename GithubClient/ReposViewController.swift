@@ -8,10 +8,19 @@
 
 import UIKit
 
-class ReposViewController: BaseViewController, UISearchBarDelegate {
+class ReposViewController: BaseViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("REPO_CELL") as RepoCell
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
     
     // MARK: UIViewController Life Cycle
     
@@ -20,6 +29,12 @@ class ReposViewController: BaseViewController, UISearchBarDelegate {
         self.title = "Repos"
         
         searchBar.delegate = self
+        
+        table.delegate = self
+        table.dataSource = self
+        table.registerNib(UINib(nibName: "RepoCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "REPO_CELL")
+        table.estimatedRowHeight = 100
+        table.rowHeight = UITableViewAutomaticDimension
 
         // Do any additional setup after loading the view.
     }

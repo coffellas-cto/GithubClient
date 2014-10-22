@@ -26,6 +26,8 @@
 		9AF2929519F70B0700599178 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929419F70B0700599178 /* ReposViewController.swift */; };
 		9AF2929719F70B9F00599178 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929619F70B9F00599178 /* Constants.swift */; };
 		9AF2929919F70C7F00599178 /* ViewControllersMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929819F70C7F00599178 /* ViewControllersMediator.swift */; };
+		9AF2929C19F71DDD00599178 /* RepoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF2929B19F71DDD00599178 /* RepoCell.xib */; };
+		9AF2929E19F720A000599178 /* RepoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929D19F720A000599178 /* RepoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		9AF2929419F70B0700599178 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
 		9AF2929619F70B9F00599178 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9AF2929819F70C7F00599178 /* ViewControllersMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllersMediator.swift; sourceTree = "<group>"; };
+		9AF2929B19F71DDD00599178 /* RepoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RepoCell.xib; sourceTree = "<group>"; };
+		9AF2929D19F720A000599178 /* RepoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				9A1B9C1619F56BF600C022C0 /* AppDelegate.swift */,
-				9A1B9C1D19F56BF600C022C0 /* Main.storyboard */,
 				9A1B9C2019F56BF600C022C0 /* Images.xcassets */,
-				9A1B9C2219F56BF600C022C0 /* LaunchScreen.xib */,
+				9AF2929A19F71DC800599178 /* UI */,
 				9A1B9C1819F56BF600C022C0 /* GithubClient.xcdatamodeld */,
 				9A1B9C1419F56BF600C022C0 /* Supporting Files */,
 				9A1B9C4019F5B94100C022C0 /* Views */,
@@ -157,6 +160,7 @@
 		9A1B9C4019F5B94100C022C0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9AF2929D19F720A000599178 /* RepoCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -189,6 +193,16 @@
 				9AA463F019F5F70300D3D9CC /* Core Data */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		9AF2929A19F71DC800599178 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				9A1B9C1D19F56BF600C022C0 /* Main.storyboard */,
+				9A1B9C2219F56BF600C022C0 /* LaunchScreen.xib */,
+				9AF2929B19F71DDD00599178 /* RepoCell.xib */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +288,7 @@
 				9A1B9C1F19F56BF600C022C0 /* Main.storyboard in Resources */,
 				9A1B9C2419F56BF600C022C0 /* LaunchScreen.xib in Resources */,
 				9A1B9C2119F56BF600C022C0 /* Images.xcassets in Resources */,
+				9AF2929C19F71DDD00599178 /* RepoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +321,7 @@
 				9AF2929719F70B9F00599178 /* Constants.swift in Sources */,
 				9A52278219F6CEF600BE45C0 /* GithubNetworking.swift in Sources */,
 				9AA463F719F5F88B00D3D9CC /* User.swift in Sources */,
+				9AF2929E19F720A000599178 /* RepoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

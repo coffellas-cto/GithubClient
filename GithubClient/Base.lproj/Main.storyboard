@@ -61,7 +61,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6zn-Y8-8wl">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <searchBar key="tableFooterView" contentMode="redraw" id="KAt-bh-oOh">
+                                <searchBar key="tableHeaderView" contentMode="redraw" id="L04-0l-jF8">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -77,7 +77,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="searchBar" destination="KAt-bh-oOh" id="2Ec-ei-iCy"/>
+                        <outlet property="searchBar" destination="L04-0l-jF8" id="NsW-bM-vTe"/>
                         <outlet property="table" destination="6zn-Y8-8wl" id="UZy-Ee-jEq"/>
                     </connections>
                 </viewController>
