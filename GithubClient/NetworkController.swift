@@ -76,7 +76,70 @@ class NetworkController {
         
     }
     
+    // MARK: Private Methods
+    
+    private func processResponse(response: NSURLResponse!, error: NSError!) -> String? {
+        if error != nil {
+            return error.localizedDescription
+        }
+        
+        let HTTPResponse = response as NSHTTPURLResponse
+        var errorString: String?
+        switch HTTPResponse.statusCode {
+        case 200...299:
+            break
+        case 400...499:
+            errorString = "Client error"
+        case 500...599:
+            errorString = "Server error"
+        default:
+            errorString = "Unknown error"
+        }
+        
+        if let errorString = errorString {
+            return "\(errorString): \(HTTPResponse.statusCode)"
+        }
+        
+        return nil
+    }
+    
     // MARK: Public Methods
+    
+    func downloadResourceWithURLString(URLString: String, completion: (localPath: String!, errorString: String!) -> Void) {
+        let URL = NSURL(string: URLString)!
+        let request = NSURLRequest(URL: URL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: kGithubClientDefaultTimeout)
+        session.downloadTaskWithRequest(request, completionHandler: { (localURL, response, error) -> Void in
+            
+                if let errorString = self.processResponse(response, error: error) {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(localPath: nil, errorString: errorString)
+                    })
+                    return
+                }
+                
+                if localURL == nil {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(localPath: nil, errorString: "Fatal error! Request succeed, but URL is nil!")
+                    })
+                    return
+                }
+                
+                let localPath = NSTemporaryDirectory().stringByAppendingPathComponent(NSUUID().UUIDString)
+                var error: NSError?
+                NSFileManager.defaultManager().copyItemAtURL(localURL, toURL: NSURL(fileURLWithPath: localPath)!, error: &error)
+                if error != nil {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(localPath: nil, errorString: "Couldn't copy downloaded file: \(error!.localizedDescription)")
+                    })
+                    return
+                }
+            
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    completion(localPath: localPath, errorString: nil)
+                })
+            
+        }).resume()
+    }
     
     func performRequestWithURLPath(URLPath: String, method: String = "GET", parameters: [NSString: NSString]? = nil, acceptJSONResponse: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
         if let baseURL = baseURL {
@@ -113,26 +176,8 @@ class NetworkController {
         
         session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if error != nil {
-                    completion(data: nil, errorString: error.localizedDescription)
-                    return
-                }
-                
-                let HTTPResponse = response as NSHTTPURLResponse
-                var errorString: String?
-                switch HTTPResponse.statusCode {
-                case 200...299:
-                    break
-                case 400...499:
-                    errorString = "Client error"
-                case 500...599:
-                    errorString = "Server error"
-                default:
-                    errorString = "Unknown error"
-                }
-                
-                if let errorString = errorString {
-                    completion(data: nil, errorString: "\(errorString): \(HTTPResponse.statusCode)")
+                if let errorString = self.processResponse(response, error: error) {
+                    completion(data: nil, errorString: errorString)
                     return
                 }
                 
