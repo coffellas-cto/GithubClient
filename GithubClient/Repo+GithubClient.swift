@@ -46,10 +46,10 @@ extension Repo {
             retVal.fullName = dic["full_name"] as String
             retVal.htmlUrl = dic["html_url"] as String
             retVal.isPrivate = dic["private"] as Bool
-            retVal.language = dic["language"] as String
+            retVal.language = dic["language"] as? String
             retVal.stargazersCount = Int16(dic["stargazers_count"] as Int)
             retVal.updateDate = dic["updated_at"] as String
-            retVal.descriptionString = dic["description"] as String
+            retVal.descriptionString = dic["description"] as? String
             retVal.user = User.userFromNSDictionary(dic["owner"] as NSDictionary)
         }
         
