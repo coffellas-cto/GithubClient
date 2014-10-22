@@ -67,16 +67,25 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-kx-q7A">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="color" red="0.49915832182320441" green="0.49915832182320441" blue="0.49915832182320441" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6zn-Y8-8wl" firstAttribute="top" secondItem="AfN-AP-dd2" secondAttribute="top" id="2xp-D6-lQB"/>
+                            <constraint firstItem="6zn-Y8-8wl" firstAttribute="height" secondItem="BSg-kx-q7A" secondAttribute="height" id="HGf-DL-hD3"/>
                             <constraint firstItem="6zn-Y8-8wl" firstAttribute="leading" secondItem="AfN-AP-dd2" secondAttribute="leading" id="Kj3-pL-PPf"/>
+                            <constraint firstItem="6zn-Y8-8wl" firstAttribute="width" secondItem="BSg-kx-q7A" secondAttribute="width" id="des-NG-Gml"/>
+                            <constraint firstAttribute="centerY" secondItem="BSg-kx-q7A" secondAttribute="centerY" id="kc5-cp-Wg3"/>
+                            <constraint firstAttribute="centerX" secondItem="BSg-kx-q7A" secondAttribute="centerX" id="m5C-na-LQG"/>
                             <constraint firstAttribute="trailing" secondItem="6zn-Y8-8wl" secondAttribute="trailing" id="nhl-p5-rN2"/>
                             <constraint firstItem="uEd-zy-mCw" firstAttribute="top" secondItem="6zn-Y8-8wl" secondAttribute="bottom" id="pRP-bz-3sc"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="BSg-kx-q7A" id="Oz3-LG-fGF"/>
                         <outlet property="searchBar" destination="L04-0l-jF8" id="NsW-bM-vTe"/>
                         <outlet property="table" destination="6zn-Y8-8wl" id="UZy-Ee-jEq"/>
                     </connections>
