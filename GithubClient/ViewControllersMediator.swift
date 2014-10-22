@@ -15,6 +15,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
     private var containerVC: UIViewController!
     private var menuVC: MenuViewController!
     lazy private var reposVC: ReposViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("REPOS_VC") as ReposViewController
+    lazy private var usersVC: UsersViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USERS_VC") as UsersViewController
     //MARK: Public properties
     var containerViewController: UIViewController! {
         get {
@@ -32,6 +33,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
     }
     
     func showUsers() {
+        showVC(usersVC)
     }
     
     func showProfile() {
@@ -71,7 +73,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
         
         // Set up Split ViewController
         splitVC = UISplitViewController()
-        showRepos()
+        showUsers()
         splitVC.delegate = self
         splitVC.preferredPrimaryColumnWidthFraction = 0.8
         splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
