@@ -12,18 +12,36 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
     
     // MARK: Private Properties
     private var headerView: UsersCollectionHeaderView!
+    private var isSearching = false
+    private var dataSourceArray = [NSNumber]()
     
     // MARK: Outlets
     @IBOutlet var collection: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: UICollectionView Delegates Methods
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("USER_CELL", forIndexPath: indexPath) as UserCell
+        cell.avatarImageView.image = nil
+        
+        let user = CoreDataManager.manager.fetchObjectsWithEntityClass(User.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as User!
+        if user == nil {
+            cell.nameLabel.text = nil
+            return cell
+        }
+        
+        cell.nameLabel.text = user.login
+        
+        // Tag trick (surpasses the loading of image if cell is not on screen)
+        cell.tag++
+        let currentTag = cell.tag
+        UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.activityIndicator, currentTag: currentTag)
+        
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return dataSourceArray.count
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -39,6 +57,38 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        
+        activityIndicator.startAnimating()
+        searchBar.resignFirstResponder()
+        if isSearching {
+            return
+        }
+        
+        isSearching = true
+        GithubNetworking.controller.searchForUsersContaining(queryString: searchBar.text) { (responseDic, errorString) -> Void in
+            if errorString != nil {
+                UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK")
+            }
+            else {
+                if let users = responseDic!["items"] as? NSArray {
+                    self.dataSourceArray = [NSNumber]()
+                    for user in users {
+                        if let user = user as? NSDictionary {
+                            User.userFromNSDictionary(user)
+                            if let id = user["id"] as? NSNumber {
+                                self.dataSourceArray.append(id)
+                            }
+                        }
+                    }
+                    
+                    CoreDataManager.manager.saveContext()
+                    self.collection.reloadData()
+                }
+            }
+            
+            self.activityIndicator.stopAnimating()
+            self.isSearching = false
+        }
     }
     // MARK: UIViewController Life Cycle
     

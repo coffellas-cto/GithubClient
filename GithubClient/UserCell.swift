@@ -10,4 +10,8 @@ import UIKit
 
 class UserCell: UICollectionViewCell {
     
+    @IBOutlet var avatarImageView: UIImageView!
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
 }

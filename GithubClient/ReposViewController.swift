@@ -23,56 +23,30 @@ class ReposViewController: BaseViewController, UISearchBarDelegate, UITableViewD
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("REPO_CELL") as RepoCell
-        let repo = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as Repo
-        cell.nameLabel.text = "A very long string A very long string A very long string A very long string"//repo.name
+        cell.avatarImageView.image = nil
+
+        let repo = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as Repo!
+        if repo == nil {
+            cell.nameLabel.text = nil
+            cell.starsCountLabel.text = nil
+            cell.languageLabel.text = nil
+            cell.descriptionLabel.text = nil
+            cell.privateLabel.text = nil
+            return cell
+        }
+        
+        cell.nameLabel.text = repo.name
         cell.starsCountLabel.text = "\(repo.stargazersCount)"
         cell.languageLabel.text = repo.language
         cell.descriptionLabel.text = repo.descriptionString
         cell.privateLabel.text = repo.isPrivate ? "Private" : "Public"
-        cell.avatarImageView.image = nil
         
         // Tag trick (surpasses the loading of image if cell is not on screen)
         cell.tag++
         let currentTag = cell.tag
         
         if let user = repo.user {
-            var mustDownload = true
-            if let avatarLocalPath = user.avatarLocalPath {
-                if let image = UIImage(contentsOfFile: avatarLocalPath) {
-                    cell.avatarImageView.image = image
-                    mustDownload = false
-                }
-                else {
-                    user.avatarLocalPath = nil
-                }
-            }
-            
-            if mustDownload {
-                if let avatarUrl = repo.user?.avatarUrl {
-                    cell.activityIndicator.startAnimating()
-                    GithubNetworking.controller.downloadResourceWithURLString(avatarUrl, completion: { (localURL, errorString) -> Void in
-                        if errorString != nil {
-                            println(errorString)
-                            return
-                        }
-                        
-                        if (localURL != nil) {
-                            user.avatarLocalPath = localURL
-                            CoreDataManager.manager.saveContext()
-                            if let image = UIImage(contentsOfFile: user.avatarLocalPath!) {
-                                // Using tag trick here
-                                if cell.tag == currentTag {
-                                    UIView.transitionWithView(cell.avatarImageView, duration: 0.2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-                                        cell.avatarImageView.image = image
-                                    }, completion: nil)
-                                }
-                            }
-                        }
-                        
-                        cell.activityIndicator.stopAnimating()
-                    })
-                }
-            }
+            UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.activityIndicator, currentTag: currentTag)
         }
         
         return cell

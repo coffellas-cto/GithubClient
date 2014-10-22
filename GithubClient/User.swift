@@ -13,7 +13,7 @@ class User: NSManagedObject {
 
     @NSManaged var login: String
     @NSManaged var id: Int64
-    @NSManaged var avatarUrl: String
+    @NSManaged var avatarUrl: String?
     @NSManaged var apiUrl: String
     @NSManaged var htmlUrl: String?
     @NSManaged var publicRepos: NSNumber?

@@ -97,7 +97,6 @@
         <!--Users View Controller-->
         <scene sceneID="uun-H3-S3k">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RPM-Uq-7cp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="USERS_VC" id="Kk3-MG-9kj" customClass="UsersViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NSQ-uW-3v5"/>
@@ -109,13 +108,18 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6Ec-3i-8sF">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="DnU-Yk-0jq">
                                     <size key="itemSize" width="100" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="44"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" id="EnL-6U-YEm">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="0.49915832180000003" green="0.49915832180000003" blue="0.49915832180000003" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="USER_CELL" id="JqT-m5-X3a" customClass="UserCell" customModule="GithubClient" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -124,9 +128,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z92-bi-idt">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z92-bi-idt">
                                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
-                                                    <color key="backgroundColor" red="0.81960784310000001" green="0.85490196080000003" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.93071407080000002" green="0.93068623539999995" blue="0.93070197109999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="100" id="sav-dd-wyV"/>
                                                         <constraint firstAttribute="width" constant="100" id="zAG-XI-1uF"/>
@@ -138,13 +142,25 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="sAb-sH-Za8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="z92-bi-idt" firstAttribute="leading" secondItem="JqT-m5-X3a" secondAttribute="leading" id="37x-DE-deW"/>
+                                            <constraint firstItem="sAb-sH-Za8" firstAttribute="top" secondItem="JqT-m5-X3a" secondAttribute="top" id="7KH-Uj-aCr"/>
+                                            <constraint firstItem="sAb-sH-Za8" firstAttribute="height" secondItem="z92-bi-idt" secondAttribute="height" id="7mc-3a-xwT"/>
                                             <constraint firstItem="z92-bi-idt" firstAttribute="top" secondItem="JqT-m5-X3a" secondAttribute="top" id="Bgz-su-1ag"/>
+                                            <constraint firstItem="sAb-sH-Za8" firstAttribute="leading" secondItem="JqT-m5-X3a" secondAttribute="leading" id="Iaa-nE-fer"/>
+                                            <constraint firstItem="sAb-sH-Za8" firstAttribute="width" secondItem="z92-bi-idt" secondAttribute="width" id="XcR-7X-Qdf"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="activityIndicator" destination="sAb-sH-Za8" id="0nH-Fx-577"/>
+                                            <outlet property="avatarImageView" destination="z92-bi-idt" id="c1O-JP-hVB"/>
+                                            <outlet property="nameLabel" destination="iKh-cY-unP" id="bhO-rf-C1y"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="USERS_COLLECTION_HEADER" id="LQX-kS-TNI" customClass="UsersCollectionHeaderView" customModule="GithubClient" customModuleProvider="target">
@@ -177,9 +193,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="EnL-6U-YEm" id="1j2-Fy-hgW"/>
                         <outlet property="collection" destination="6Ec-3i-8sF" id="bSH-Sn-we5"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RPM-Uq-7cp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1651" y="-51"/>
         </scene>

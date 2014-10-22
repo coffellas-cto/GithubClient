@@ -42,7 +42,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dO2-co-HvW">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dO2-co-HvW">
                         <rect key="frame" x="96" y="255" width="20" height="20"/>
                         <color key="backgroundColor" red="0.93071407080000002" green="0.93068623539999995" blue="0.93070197109999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

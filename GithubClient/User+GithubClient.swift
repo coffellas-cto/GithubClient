@@ -45,7 +45,7 @@ extension User {
             retVal.updateDate = dic["updated_at"] as String?
             retVal.login = dic["login"] as String
             retVal.apiUrl = dic["url"] as String
-            retVal.avatarUrl = dic["avatar_url"] as String
+            retVal.avatarUrl = dic["avatar_url"] as String?
             retVal.avatarLocalPath = nil
             retVal.htmlUrl = dic["html_url"] as String?
             retVal.publicRepos = dic["public_repos"] as Int?

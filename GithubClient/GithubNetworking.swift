@@ -31,15 +31,8 @@ class GithubNetworking: NetworkController {
         return kGithubAPIURL.stringByAppendingPathComponent(pathComponent)
     }
     
-    // MARK: Life Cycle
-    override init() {
-        super.init()
-        baseURL = kGithubAPIURL
-    }
-    
-    // MARK: Using API
-    func searchForReposContaining(#queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
-        performRequestWithURLPath("/search/repositories", parameters: ["q": queryString], acceptJSONResponse: true) { (data, errorString) -> Void in
+    private func searchForPath(path: String, containing queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
+        performRequestWithURLPath(path, parameters: ["q": queryString], acceptJSONResponse: true) { (data, errorString) -> Void in
             
             var newErrorString = errorString
             if errorString == nil {
@@ -58,6 +51,21 @@ class GithubNetworking: NetworkController {
         }
     }
     
+    // MARK: Life Cycle
+    override init() {
+        super.init()
+        baseURL = kGithubAPIURL
+    }
+    
+    // MARK: Using API
+    func searchForReposContaining(#queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
+        searchForPath("/search/repositories", containing: queryString, completion: completion)
+    }
+    
+    func searchForUsersContaining(#queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
+        searchForPath("/search/users", containing: queryString, completion: completion)
+    }
+    
     // MARK: Authorization stuff
     
     func setAccessToken(accessToken: String) {
@@ -67,11 +75,6 @@ class GithubNetworking: NetworkController {
         }
         
         session = NSURLSession(configuration: configuration)
-        
-//        searchForReposContaining(queryString: "tiny") { (responseDic, errorString) -> Void in
-//            println(responseDic)
-//            println(errorString)
-//        }
     }
     
     func requestOAuthAccess() {
