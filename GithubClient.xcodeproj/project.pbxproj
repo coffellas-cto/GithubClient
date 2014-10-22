@@ -150,8 +150,8 @@
 		9A1B9C3B19F5A1E200C022C0 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */,
 				9A1B9C3C19F5A22500C022C0 /* BaseViewController.swift */,
+				9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */,
 				9AF2929419F70B0700599178 /* ReposViewController.swift */,
 			);
 			name = "View Controllers";
