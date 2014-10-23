@@ -17,10 +17,20 @@ class UserViewCell: UITableViewCell {
     @IBOutlet weak var avatarActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var avatarImageView: UIImageView!
     
+    // MARK: Private Methods
+    private func resetViews() {
+        avatarImageView.image = nil
+        nameLabel.text = nil
+        reposLabel.text = nil
+        bioLabel.text = nil
+        loginLabel.text = nil
+    }
+    
     // MARK: Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        resetViews()
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -31,11 +41,7 @@ class UserViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        avatarImageView.image = nil
-        nameLabel.text = nil
-        reposLabel.text = nil
-        bioLabel.text = nil
-        loginLabel.text = nil
+        resetViews()
     }
 
 }
