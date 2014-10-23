@@ -23,15 +23,9 @@ class ReposViewController: BaseViewController, UISearchBarDelegate, UITableViewD
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("REPO_CELL") as RepoCell
-        cell.avatarImageView.image = nil
 
         let repo = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as Repo!
         if repo == nil {
-            cell.nameLabel.text = nil
-            cell.starsCountLabel.text = nil
-            cell.languageLabel.text = nil
-            cell.descriptionLabel.text = nil
-            cell.privateLabel.text = nil
             return cell
         }
         

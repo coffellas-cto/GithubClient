@@ -22,11 +22,9 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
     // MARK: UICollectionView Delegates Methods
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("USER_CELL", forIndexPath: indexPath) as UserCell
-        cell.avatarImageView.image = nil
         
         let user = CoreDataManager.manager.fetchObjectsWithEntityClass(User.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as User!
         if user == nil {
-            cell.nameLabel.text = nil
             return cell
         }
         

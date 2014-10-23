@@ -14,4 +14,10 @@ class UserCell: UICollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.avatarImageView.image = nil
+        self.nameLabel.text = nil
+    }
+    
 }

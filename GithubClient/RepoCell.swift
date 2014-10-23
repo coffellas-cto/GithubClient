@@ -31,5 +31,16 @@ class RepoCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.avatarImageView.image = nil
+        self.nameLabel.text = nil
+        self.starsCountLabel.text = nil
+        self.languageLabel.text = nil
+        self.descriptionLabel.text = nil
+        self.privateLabel.text = nil
+    }
 
 }
