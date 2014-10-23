@@ -201,5 +201,38 @@
             </objects>
             <point key="canvasLocation" x="1651" y="-51"/>
         </scene>
+        <!--User View Controller-->
+        <scene sceneID="AIV-pc-JvQ">
+            <objects>
+                <viewController storyboardIdentifier="USER_VC" id="8Tg-a7-XXF" customClass="UserViewController" customModule="GithubClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Hh-2l-glc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yrz-x4-Upo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MmJ-2I-FG4">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="95a-Jc-BrP">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Yrz-x4-Upo" firstAttribute="top" secondItem="95a-Jc-BrP" secondAttribute="bottom" id="3l0-MZ-pMC"/>
+                            <constraint firstAttribute="trailing" secondItem="95a-Jc-BrP" secondAttribute="trailing" id="J4Y-22-r5U"/>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="top" secondItem="MmJ-2I-FG4" secondAttribute="top" id="PXX-If-CQa"/>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="leading" secondItem="MmJ-2I-FG4" secondAttribute="leading" id="qpf-vA-X2b"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="table" destination="95a-Jc-BrP" id="ah2-6U-c5P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NEJ-Fc-8Q7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="73" y="731"/>
+        </scene>
     </scenes>
 </document>

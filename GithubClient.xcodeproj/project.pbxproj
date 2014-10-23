@@ -19,6 +19,8 @@
 		9A54CE5119F622C800D77AC8 /* Repo+GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A54CE5019F622C800D77AC8 /* Repo+GithubClient.swift */; };
 		9A54CE5319F622D700D77AC8 /* User+GithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A54CE5219F622D700D77AC8 /* User+GithubClient.swift */; };
 		9A57F29419F5BFB100EFEC8F /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A57F29319F5BFB100EFEC8F /* NetworkController.swift */; };
+		9A6C0AA819F9947C001FD2AD /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6C0AA719F9947C001FD2AD /* UserViewController.swift */; };
+		9A6C0AAC19F995F3001FD2AD /* UserViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A6C0AAB19F995F3001FD2AD /* UserViewCell.xib */; };
 		9A8E884819F85643002664E2 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884719F85643002664E2 /* UsersViewController.swift */; };
 		9A8E884A19F856E8002664E2 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884919F856E8002664E2 /* UserCell.swift */; };
 		9A8E884C19F86072002664E2 /* UsersCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884B19F86072002664E2 /* UsersCollectionHeaderView.swift */; };
@@ -61,6 +63,8 @@
 		9A54CE5019F622C800D77AC8 /* Repo+GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Repo+GithubClient.swift"; sourceTree = "<group>"; };
 		9A54CE5219F622D700D77AC8 /* User+GithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+GithubClient.swift"; sourceTree = "<group>"; };
 		9A57F29319F5BFB100EFEC8F /* NetworkController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
+		9A6C0AA719F9947C001FD2AD /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		9A6C0AAB19F995F3001FD2AD /* UserViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewCell.xib; sourceTree = "<group>"; };
 		9A8E884719F85643002664E2 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		9A8E884919F856E8002664E2 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		9A8E884B19F86072002664E2 /* UsersCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCollectionHeaderView.swift; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				9A1B9C3919F5A1D500C022C0 /* MenuViewController.swift */,
 				9AF2929419F70B0700599178 /* ReposViewController.swift */,
 				9A8E884719F85643002664E2 /* UsersViewController.swift */,
+				9A6C0AA719F9947C001FD2AD /* UserViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				9A1B9C1D19F56BF600C022C0 /* Main.storyboard */,
 				9A1B9C2219F56BF600C022C0 /* LaunchScreen.xib */,
 				9AF2929B19F71DDD00599178 /* RepoCell.xib */,
+				9A6C0AAB19F995F3001FD2AD /* UserViewCell.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 				9A1B9C1F19F56BF600C022C0 /* Main.storyboard in Resources */,
 				9A1B9C2419F56BF600C022C0 /* LaunchScreen.xib in Resources */,
 				9A1B9C2119F56BF600C022C0 /* Images.xcassets in Resources */,
+				9A6C0AAC19F995F3001FD2AD /* UserViewCell.xib in Resources */,
 				9AF2929C19F71DDD00599178 /* RepoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +332,7 @@
 				9A1B9C1719F56BF600C022C0 /* AppDelegate.swift in Sources */,
 				9A8E884C19F86072002664E2 /* UsersCollectionHeaderView.swift in Sources */,
 				9AF2929519F70B0700599178 /* ReposViewController.swift in Sources */,
+				9A6C0AA819F9947C001FD2AD /* UserViewController.swift in Sources */,
 				9A54CE5119F622C800D77AC8 /* Repo+GithubClient.swift in Sources */,
 				9A54CE5319F622D700D77AC8 /* User+GithubClient.swift in Sources */,
 				9AAF911A19F705BA000DF765 /* PrivateConstants.swift in Sources */,

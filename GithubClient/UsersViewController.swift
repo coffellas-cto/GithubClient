@@ -51,6 +51,11 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
         return headerView
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let userVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USER_VC") as UserViewController
+        self.navigationController?.pushViewController(userVC, animated: true)
+    }
+    
     // MARK: UISearchBarDelegate Methods
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
