@@ -45,6 +45,19 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
         table.rowHeight = UITableViewAutomaticDimension
         table.registerNib(UINib(nibName: "UserViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "USER_VIEW_CELL")
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if user == nil {
+            return
+        }
+        
+        self.title = user.login + "'s info"
+        GithubNetworking.controller.performRequestWithURLString(user.apiUrl, acceptJSONResponse: true) { (data, errorString) -> Void in
+            self.user = User.userFromJSONData(data)
+            self.table.reloadData()
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

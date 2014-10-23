@@ -45,12 +45,16 @@ extension User {
             retVal.updateDate = dic["updated_at"] as String?
             retVal.login = dic["login"] as String
             retVal.apiUrl = dic["url"] as String
-            retVal.avatarUrl = dic["avatar_url"] as String?
-            retVal.avatarLocalPath = nil
+            if let avatarUrl = dic["avatar_url"] as String? {
+                if avatarUrl != retVal.avatarUrl {
+                    retVal.avatarUrl = avatarUrl
+                    retVal.avatarLocalPath = nil
+                }
+            }
             retVal.htmlUrl = dic["html_url"] as String?
             retVal.publicRepos = dic["public_repos"] as NSNumber?
             retVal.name = dic["name"] as String?
-            retVal.bio = dic["bio"] as String?
+            retVal.bio = dic["bio"] as? String
         }
         
         return retVal
