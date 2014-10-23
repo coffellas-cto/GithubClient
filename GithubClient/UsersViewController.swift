@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UsersViewController: BaseViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class UsersViewController: BaseViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate  {
     
     // MARK: Private Properties
     private var headerView: UsersCollectionHeaderView!
@@ -99,11 +99,27 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
             self.isSearching = false
         }
     }
+    
+    // MARK: Navigation Controller Delegate
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animationController = AnimationController()
+        switch operation {
+        case .Push:
+            animationController.type = .Push
+        case .Pop:
+            animationController.type = .Pop
+        default:
+            return nil
+        }
+        
+        return animationController
+    }
     // MARK: UIViewController Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Users"
+        self.navigationController?.delegate = self
         
         collection.delegate = self
         collection.dataSource = self

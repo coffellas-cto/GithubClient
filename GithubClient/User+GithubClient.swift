@@ -53,7 +53,7 @@ extension User {
             }
             retVal.htmlUrl = dic["html_url"] as String?
             retVal.publicRepos = dic["public_repos"] as NSNumber?
-            retVal.name = dic["name"] as String?
+            retVal.name = dic["name"] as? String
             retVal.bio = dic["bio"] as? String
         }
         
