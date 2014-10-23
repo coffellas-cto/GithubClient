@@ -20,6 +20,12 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("USER_VIEW_CELL", forIndexPath: indexPath) as UserViewCell
+        if user == nil {
+            return cell
+        }
+        
+        cell.nameLabel.text = user.name
+        cell.bioLabel.text = user.bio
         cell.loginLabel.text = user.login
         cell.setReposNumber(user.publicRepos)
         UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.avatarActivityIndicator, currentTag: cell.tag)

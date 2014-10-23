@@ -16,15 +16,17 @@
         <attribute name="apiUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avatarLocalPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="avatarUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bio" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="htmlUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="login" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publicRepos" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="updateDate" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="repos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Repo" inverseName="user" inverseEntity="Repo" syncable="YES"/>
     </entity>
     <elements>
         <element name="Repo" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="User" positionX="-54" positionY="63" width="128" height="180"/>
+        <element name="User" positionX="-54" positionY="63" width="128" height="210"/>
     </elements>
 </model>

@@ -22,12 +22,12 @@
 		9A6C0AA819F9947C001FD2AD /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6C0AA719F9947C001FD2AD /* UserViewController.swift */; };
 		9A6C0AAC19F995F3001FD2AD /* UserViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A6C0AAB19F995F3001FD2AD /* UserViewCell.xib */; };
 		9A6C0AAE19F99909001FD2AD /* UserViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6C0AAD19F99909001FD2AD /* UserViewCell.swift */; };
+		9A6C0AB019F9A2AD001FD2AD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6C0AAF19F9A2AD001FD2AD /* User.swift */; };
 		9A8E884819F85643002664E2 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884719F85643002664E2 /* UsersViewController.swift */; };
 		9A8E884A19F856E8002664E2 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884919F856E8002664E2 /* UserCell.swift */; };
 		9A8E884C19F86072002664E2 /* UsersCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884B19F86072002664E2 /* UsersCollectionHeaderView.swift */; };
 		9A8E884E19F870D7002664E2 /* UIHelperGithubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E884D19F870D7002664E2 /* UIHelperGithubClient.swift */; };
 		9AA463F519F5F7BC00D3D9CC /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F419F5F7BC00D3D9CC /* Repo.swift */; };
-		9AA463F719F5F88B00D3D9CC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F619F5F88B00D3D9CC /* User.swift */; };
 		9AA463F919F6028300D3D9CC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F819F6028300D3D9CC /* CoreDataManager.swift */; };
 		9AAF911A19F705BA000DF765 /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF911919F705BA000DF765 /* PrivateConstants.swift */; };
 		9AF2929519F70B0700599178 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929419F70B0700599178 /* ReposViewController.swift */; };
@@ -67,12 +67,12 @@
 		9A6C0AA719F9947C001FD2AD /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		9A6C0AAB19F995F3001FD2AD /* UserViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewCell.xib; sourceTree = "<group>"; };
 		9A6C0AAD19F99909001FD2AD /* UserViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewCell.swift; sourceTree = "<group>"; };
+		9A6C0AAF19F9A2AD001FD2AD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9A8E884719F85643002664E2 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		9A8E884919F856E8002664E2 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		9A8E884B19F86072002664E2 /* UsersCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersCollectionHeaderView.swift; sourceTree = "<group>"; };
 		9A8E884D19F870D7002664E2 /* UIHelperGithubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHelperGithubClient.swift; sourceTree = "<group>"; };
 		9AA463F419F5F7BC00D3D9CC /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
-		9AA463F619F5F88B00D3D9CC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9AA463F819F6028300D3D9CC /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9AAF911919F705BA000DF765 /* PrivateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
 		9AF2929419F70B0700599178 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA463F419F5F7BC00D3D9CC /* Repo.swift */,
-				9AA463F619F5F88B00D3D9CC /* User.swift */,
+				9A6C0AAF19F9A2AD001FD2AD /* User.swift */,
 				9A54CE5019F622C800D77AC8 /* Repo+GithubClient.swift */,
 				9A54CE5219F622D700D77AC8 /* User+GithubClient.swift */,
 			);
@@ -348,8 +348,8 @@
 				9AF2929719F70B9F00599178 /* Constants.swift in Sources */,
 				9A8E884A19F856E8002664E2 /* UserCell.swift in Sources */,
 				9A52278219F6CEF600BE45C0 /* GithubNetworking.swift in Sources */,
-				9AA463F719F5F88B00D3D9CC /* User.swift in Sources */,
 				9AF2929E19F720A000599178 /* RepoCell.swift in Sources */,
+				9A6C0AB019F9A2AD001FD2AD /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
