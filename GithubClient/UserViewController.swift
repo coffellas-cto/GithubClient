@@ -29,6 +29,8 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
+        table.estimatedRowHeight = 100
+        table.rowHeight = UITableViewAutomaticDimension
         table.registerNib(UINib(nibName: "UserViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "USER_VIEW_CELL")
     }
 
