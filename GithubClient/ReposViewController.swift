@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReposViewController: BaseViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class ReposViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!

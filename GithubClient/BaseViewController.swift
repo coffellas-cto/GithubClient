@@ -8,9 +8,17 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseViewController: UIViewController, UISearchBarDelegate {
     func menuTapped(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: kNotificationGithubClientShowMenu, object: nil))
+    }
+    
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text.valid {
+            return true
+        }
+        
+        return false
     }
     
     override func viewDidLoad() {

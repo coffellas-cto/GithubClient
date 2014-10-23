@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UsersViewController: BaseViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate  {
+class UsersViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate  {
     
     // MARK: Private Properties
     private var headerView: UsersCollectionHeaderView!
