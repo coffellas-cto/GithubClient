@@ -52,7 +52,13 @@ class UsersViewController: BaseViewController, UISearchBarDelegate, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let user = CoreDataManager.manager.fetchObjectsWithEntityClass(User.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as User!
+        if user == nil {
+            return
+        }
+        
         let userVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USER_VC") as UserViewController
+        userVC.user = user
         self.navigationController?.pushViewController(userVC, animated: true)
     }
     

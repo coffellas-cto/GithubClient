@@ -17,6 +17,15 @@ class UserViewCell: UITableViewCell {
     @IBOutlet weak var avatarActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var avatarImageView: UIImageView!
     
+    // MARK: Private Properties
+    
+    // MARK: Public Methods
+    func setReposNumber(number: NSNumber?) {
+        if let number = number {
+            reposLabel.text = "Repos: \(number)"
+        }
+        
+    }
     // MARK: Private Methods
     private func resetViews() {
         avatarImageView.image = nil

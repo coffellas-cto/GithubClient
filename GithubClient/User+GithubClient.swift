@@ -40,7 +40,7 @@ extension User {
             retVal = CoreDataManager.manager.newObjectForEntityClass(User) as? User
         }
         
-        if mustUpdate && retVal != nil {
+        if mustUpdate && (retVal != nil) {
             retVal.id = Int64(id)
             retVal.updateDate = dic["updated_at"] as String?
             retVal.login = dic["login"] as String
@@ -48,7 +48,7 @@ extension User {
             retVal.avatarUrl = dic["avatar_url"] as String?
             retVal.avatarLocalPath = nil
             retVal.htmlUrl = dic["html_url"] as String?
-            retVal.publicRepos = dic["public_repos"] as Int?
+            retVal.publicRepos = dic["public_repos"] as NSNumber?
         }
         
         return retVal

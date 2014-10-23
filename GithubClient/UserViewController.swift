@@ -13,10 +13,16 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!
     
+    // MARK: Public Methods
+    var user: User!
+    
     // MARK: UITableView Delegates Methods
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("USER_VIEW_CELL", forIndexPath: indexPath) as UserViewCell
+        cell.loginLabel.text = user.login
+        cell.setReposNumber(user.publicRepos)
+        UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.avatarActivityIndicator, currentTag: cell.tag)
         return cell
     }
     
