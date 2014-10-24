@@ -18,6 +18,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
     lazy private var webVC = WebViewController()
     lazy private var reposVC: ReposViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("REPOS_VC") as ReposViewController
     lazy private var usersVC: UsersViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USERS_VC") as UsersViewController
+    lazy private var currentUserVC: UserViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USER_VC") as UserViewController
     //MARK: Public properties
     var containerViewController: UIViewController! {
         get {
@@ -39,6 +40,11 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
     }
     
     func showProfile() {
+        if (currentUserVC.user == nil) && !currentUserVC.currentUser {
+            currentUserVC.currentUser = true
+        }
+        
+        showVC(currentUserVC)
     }
     
     func showWebView(notification: NSNotification) {

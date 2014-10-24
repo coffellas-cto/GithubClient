@@ -8,13 +8,14 @@
 
 import UIKit
 
-class UserViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class UserViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!
     
     // MARK: Public Methods
     var user: User!
+    var currentUser = false
     
     // MARK: UITableView Delegates Methods
     
@@ -34,13 +35,15 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("NormalCell") as UITableViewCell
-        cell.textLabel.text = indexPath.row == 1 ? "Show \(user.login)'s page" : "Show \(user.login)'s repos"
+        cell.textLabel.text = currentUser ? "Show your page" : "Show \(user.login)'s page"
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var retVal = 1
-        retVal += user.htmlUrl != nil ? 1 : 0
+        if user != nil {
+            retVal += user.htmlUrl != nil ? 1 : 0
+        }
         return retVal
     }
     
@@ -70,12 +73,28 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewWillAppear(animated: Bool) {
+        if !currentUser {
+            self.navigationItem.leftBarButtonItem = nil
+        }
+        
         super.viewWillAppear(animated)
+        
         if user == nil {
+            if currentUser {
+                GithubNetworking.controller.getCurrentUser({ (responseDic, errorString) -> Void in
+                    if errorString != nil {
+                        UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK").show()
+                        return
+                    }
+                    
+                    self.user = User.userFromNSDictionary(responseDic!)
+                    self.table.reloadData()
+                })
+            }
             return
         }
         
-        self.title = user.login + "'s info"
+        self.title = currentUser ? "Your info" : user.login + "'s info"
         GithubNetworking.controller.performRequestWithURLString(user.apiUrl, acceptJSONResponse: true) { (data, errorString) -> Void in
             self.user = User.userFromJSONData(data)
             self.table.reloadData()

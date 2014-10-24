@@ -177,7 +177,7 @@ class NetworkController {
         session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let errorString = self.processResponse(response, error: error) {
-                    completion(data: nil, errorString: errorString)
+                    completion(data: data, errorString: errorString)
                     return
                 }
                 

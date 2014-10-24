@@ -33,21 +33,34 @@ class GithubNetworking: NetworkController {
     
     private func searchForPath(path: String, containing queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
         performRequestWithURLPath(path, parameters: ["q": queryString], acceptJSONResponse: true) { (data, errorString) -> Void in
-            
-            var newErrorString = errorString
-            if errorString == nil {
-                var error: NSError?
-                if let retValDic = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &error) as? NSDictionary {
-                    completion(responseDic: retValDic, errorString: nil)
+            self.processJSONData(data, errorString: errorString, completion: completion)
+        }
+    }
+    
+    private func processJSONData(data: NSData?, errorString: String?, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
+        
+        var newErrorString = errorString
+        if data != nil {
+            var error: NSError?
+            if let retValDic = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: &error) as? NSDictionary {
+                if errorString != nil {
+                    println("Error from Github:")
+                    println(retValDic)
+                    completion(responseDic: nil, errorString: newErrorString)
                     return
                 }
                 
-                if let errorJSON = error {
-                    newErrorString = errorJSON.localizedDescription
-                }
+                completion(responseDic: retValDic, errorString: nil)
+                return
             }
             
-            completion(responseDic: nil, errorString: "Error parsing JSON response: \(newErrorString)")
+            if let errorJSON = error {
+                newErrorString = errorJSON.localizedDescription
+                completion(responseDic: nil, errorString: "Error parsing JSON response: \(newErrorString)")
+            }
+        }
+        else {
+            completion(responseDic: nil, errorString: newErrorString)
         }
     }
     
@@ -66,13 +79,19 @@ class GithubNetworking: NetworkController {
         searchForPath("/search/users", containing: queryString, completion: completion)
     }
     
+    func getCurrentUser(completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
+        performRequestWithURLPath("/user", acceptJSONResponse: true) { (data, errorString) -> Void in
+            self.processJSONData(data, errorString: errorString, completion: completion)
+        }
+    }
+    
     // MARK: Authorization stuff
     
     func setAccessToken(accessToken: String) {
         var configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        if var headers = configuration.HTTPAdditionalHeaders {
-            headers[NSString(string: "Authorization")] = accessToken
-        }
+        configuration.HTTPAdditionalHeaders = [NSObject : AnyObject]()
+        configuration.HTTPAdditionalHeaders![NSString(string: "Authorization")] = "token " + accessToken
+        println(configuration.HTTPAdditionalHeaders)
         
         session = NSURLSession(configuration: configuration)
     }
