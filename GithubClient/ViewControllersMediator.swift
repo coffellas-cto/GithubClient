@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
+class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     // MARK: Private properties
     private var splitVC: UISplitViewController!
     private var containerVC: UIViewController!
+    private var navC: UINavigationController!
     private var menuVC: MenuViewController!
     lazy private var webVC = WebViewController()
     lazy private var reposVC: ReposViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("REPOS_VC") as ReposViewController
@@ -67,11 +68,33 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
     
     // MARK: Private Methods
     private func showVC(VCToShow: UIViewController) {
-        splitVC.viewControllers = [menuVC, UINavigationController(rootViewController: VCToShow)]
+        navC = UINavigationController(rootViewController: VCToShow)
+        navC.delegate = self
+        splitVC.viewControllers = [menuVC, navC]
         splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryHidden
     }
-    // MARK: Life Cycle
     
+    // MARK: Navigation Controller Delegate
+    func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        if (fromVC.isKindOfClass(UsersViewController) && toVC.isKindOfClass(UserViewController)) || (fromVC.isKindOfClass(UserViewController) && toVC.isKindOfClass(UsersViewController)) {
+            let animationController = AnimationController()
+            switch operation {
+            case .Push:
+                animationController.type = .Push
+            case .Pop:
+                animationController.type = .Pop
+            default:
+                return nil
+            }
+            
+            return animationController
+        }
+        
+        return nil
+    }
+    
+    // MARK: Life Cycle
     override init() {
         super.init()
         // Set up notifications
