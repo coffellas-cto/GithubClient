@@ -32,9 +32,9 @@ class GithubNetworking: NetworkController {
     }
     
     private func searchForPath(path: String, containing queryString: String, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
-        performRequestWithURLPath(path, parameters: ["q": queryString], acceptJSONResponse: true) { (data, errorString) -> Void in
+        performRequestWithURLPath(path, parameters: ["q": queryString], acceptJSONResponse: true, completion: { (data, errorString) -> Void in
             self.processJSONData(data, errorString: errorString, completion: completion)
-        }
+        })
     }
     
     private func processJSONData(data: NSData?, errorString: String?, completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
@@ -80,8 +80,30 @@ class GithubNetworking: NetworkController {
     }
     
     func getCurrentUser(completion: (responseDic: NSDictionary?, errorString: String?) -> Void) {
-        performRequestWithURLPath("/user", acceptJSONResponse: true) { (data, errorString) -> Void in
+        performRequestWithURLPath("/user", acceptJSONResponse: true, completion: { (data, errorString) -> Void in
             self.processJSONData(data, errorString: errorString, completion: completion)
+        })
+    }
+    
+    func newRepoWithName(name: String, description: String!, generateReadme: Bool, allowDownloads: Bool, completion:(responseDic: NSDictionary?, errorString: String?) -> Void) {
+        var parameters = [NSString: AnyObject]()
+        parameters["name"] = name
+        if description != nil {
+            parameters["description"] = description
+        }
+        
+        parameters["auto_init"] = generateReadme
+        parameters["has_downloads"] = allowDownloads
+        
+        performRequestWithURLPath("/user/repos", method: "POST", parameters: parameters, acceptJSONResponse: true, sendBodyAsJSON: true) { (data, errorString) -> Void in
+            self.processJSONData(data, errorString: errorString, completion: { (responseDic, errorString) -> Void in
+                if errorString != nil {
+                    UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK")
+                    return
+                }
+                
+                println(responseDic)
+            })
         }
     }
     

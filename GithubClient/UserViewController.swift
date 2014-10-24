@@ -35,7 +35,12 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("NormalCell") as UITableViewCell
-        cell.textLabel.text = currentUser ? "Show your page" : "Show \(user.login)'s page"
+        switch indexPath.row {
+        case 1:
+            cell.textLabel.text = currentUser ? "Show your page" : "Show \(user.login)'s page"
+        default:
+            cell.textLabel.text = "Create new repo"
+        }
         return cell
     }
     
@@ -44,6 +49,11 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         if user != nil {
             retVal += user.htmlUrl != nil ? 1 : 0
         }
+        
+        if currentUser {
+            retVal++
+        }
+        
         return retVal
     }
     
@@ -58,6 +68,9 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
                 userInfo[kNotificationGithubClientURLToOpenKey] = URLString
                 NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGithubClientShowWebView, object: nil, userInfo: userInfo)
             }
+        } else if indexPath.row == 2 {
+            let newRepoVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("NEW_REPO_VC") as NewRepoViewController
+            self.navigationController?.pushViewController(newRepoVC, animated: true)
         }
     }
 
@@ -95,10 +108,10 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         }
         
         self.title = currentUser ? "Your info" : user.login + "'s info"
-        GithubNetworking.controller.performRequestWithURLString(user.apiUrl, acceptJSONResponse: true) { (data, errorString) -> Void in
+        GithubNetworking.controller.performRequestWithURLString(user.apiUrl, acceptJSONResponse: true, completion: { (data, errorString) -> Void in
             self.user = User.userFromJSONData(data)
             self.table.reloadData()
-        }
+        })
     }
 
     override func didReceiveMemoryWarning() {

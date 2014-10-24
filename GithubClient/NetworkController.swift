@@ -50,6 +50,14 @@ extension NSURL {
     }
 }
 
+extension NSMutableURLRequest {
+    func setBodyData(bodyData: NSData, isJSONData: Bool = false) {
+        self.HTTPBody = bodyData
+        self.setValue("\(bodyData.length)", forHTTPHeaderField: "Content-Length")
+        self.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+    }
+}
+
 class NetworkController {
     
     // MARK: Public Properties
@@ -141,37 +149,54 @@ class NetworkController {
         }).resume()
     }
     
-    func performRequestWithURLPath(URLPath: String, method: String = "GET", parameters: [NSString: NSString]? = nil, acceptJSONResponse: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
+    func performRequestWithURLPath(URLPath: String, method: String = "GET", parameters: [NSString: AnyObject]? = nil, acceptJSONResponse: Bool = false, sendBodyAsJSON: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
         if let baseURL = baseURL {
-            performRequestWithURLString(baseURL.stringByAppendingPathComponent(URLPath), method: method, parameters: parameters, acceptJSONResponse: acceptJSONResponse, completion: completion)
+            performRequestWithURLString(baseURL.stringByAppendingPathComponent(URLPath), method: method, parameters: parameters, acceptJSONResponse: acceptJSONResponse, sendBodyAsJSON: sendBodyAsJSON, completion: completion)
         }
         else {
             completion(data: nil, errorString: "Base URL not set")
         }
     }
     
-    func performRequestWithURLString(URLString: String, method: String = "GET", parameters: [NSString: NSString]? = nil, acceptJSONResponse: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
+    func performRequestWithURLString(URLString: String, method: String = "GET", parameters: [NSString: AnyObject]? = nil, acceptJSONResponse: Bool = false, sendBodyAsJSON: Bool = false, completion: (data: NSData!, errorString: String!) -> Void) {
         let URL = NSURL(string: URLString)!
         let request = NSMutableURLRequest(URL: URL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: kGithubClientDefaultTimeout)
         request.HTTPMethod = method
+        
         if parameters != nil {
-            if let encodedString = parameters!.encodedStringForHTTPBody() {
-                switch method {
-                    case "POST", "PUT", "DELETE":
-                        if let bodyData = encodedString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-                            request.HTTPBody = bodyData
-                            request.setValue("\(bodyData.length)", forHTTPHeaderField: "Content-Length")
-                            request.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
-                            if acceptJSONResponse {
-                                request.setValue("application/json", forHTTPHeaderField: "Accept")
-                            }
-                        }
-                    default:
-                        let URL = NSURL(string: URLString + "?" + encodedString)
-                        request.URL = URL
-                        break
+            switch method {
+            case "POST", "PUT", "DELETE":
+                var bodyData: NSData! = nil
+                if sendBodyAsJSON {
+                    var error: NSError?
+                    bodyData = NSJSONSerialization.dataWithJSONObject(parameters!, options: nil, error: &error)
+                    if error != nil {
+                        completion(data: nil, errorString: "Error building JSON: \(error?.localizedDescription)")
+                        return
+                    }
                 }
+                else {
+                    if let encodedString = parameters!.encodedStringForHTTPBody() {
+                        bodyData = encodedString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+                    }
+                }
+                
+                if bodyData == nil {
+                    completion(data: nil, errorString: "Couldn't create bodyData")
+                    return
+                }
+                
+                request.setBodyData(bodyData, isJSONData: sendBodyAsJSON)
+                
+            default:
+                if let encodedString = parameters!.encodedStringForHTTPBody() {
+                    let URL = NSURL(string: URLString + "?" + encodedString)
+                    request.URL = URL
+                }
+                break
             }
+            
+            
         }
         
         session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in

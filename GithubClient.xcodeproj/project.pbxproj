@@ -33,6 +33,7 @@
 		9AA463F519F5F7BC00D3D9CC /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F419F5F7BC00D3D9CC /* Repo.swift */; };
 		9AA463F919F6028300D3D9CC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA463F819F6028300D3D9CC /* CoreDataManager.swift */; };
 		9AAF911A19F705BA000DF765 /* PrivateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAF911919F705BA000DF765 /* PrivateConstants.swift */; };
+		9AC92C0819FAFE1E001DD792 /* NewRepoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC92C0719FAFE1E001DD792 /* NewRepoViewController.swift */; };
 		9AF2929519F70B0700599178 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929419F70B0700599178 /* ReposViewController.swift */; };
 		9AF2929719F70B9F00599178 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929619F70B9F00599178 /* Constants.swift */; };
 		9AF2929919F70C7F00599178 /* ViewControllersMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF2929819F70C7F00599178 /* ViewControllersMediator.swift */; };
@@ -81,6 +82,7 @@
 		9AA463F419F5F7BC00D3D9CC /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 		9AA463F819F6028300D3D9CC /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9AAF911919F705BA000DF765 /* PrivateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateConstants.swift; sourceTree = "<group>"; };
+		9AC92C0719FAFE1E001DD792 /* NewRepoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRepoViewController.swift; sourceTree = "<group>"; };
 		9AF2929419F70B0700599178 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReposViewController.swift; sourceTree = "<group>"; };
 		9AF2929619F70B9F00599178 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9AF2929819F70C7F00599178 /* ViewControllersMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllersMediator.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				9A8E884719F85643002664E2 /* UsersViewController.swift */,
 				9A6C0AA719F9947C001FD2AD /* UserViewController.swift */,
 				9A86003819FA122F00EAB561 /* WebViewController.swift */,
+				9AC92C0719FAFE1E001DD792 /* NewRepoViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				9A1B9C3A19F5A1D500C022C0 /* MenuViewController.swift in Sources */,
 				9A86003919FA122F00EAB561 /* WebViewController.swift in Sources */,
 				9A1B9C1A19F56BF600C022C0 /* GithubClient.xcdatamodeld in Sources */,
+				9AC92C0819FAFE1E001DD792 /* NewRepoViewController.swift in Sources */,
 				9A1B9C3D19F5A22500C022C0 /* BaseViewController.swift in Sources */,
 				9A8E884819F85643002664E2 /* UsersViewController.swift in Sources */,
 				9AA463F919F6028300D3D9CC /* CoreDataManager.swift in Sources */,
