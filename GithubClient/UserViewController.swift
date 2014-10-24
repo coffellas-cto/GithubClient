@@ -19,21 +19,43 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: UITableView Delegates Methods
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("USER_VIEW_CELL", forIndexPath: indexPath) as UserViewCell
-        if user == nil {
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("USER_VIEW_CELL", forIndexPath: indexPath) as UserViewCell
+            if user == nil {
+                return cell
+            }
+            
+            cell.nameLabel.text = user.name
+            cell.bioLabel.text = user.bio
+            cell.loginLabel.text = user.login
+            cell.setReposNumber(user.publicRepos)
+            UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.avatarActivityIndicator, currentTag: cell.tag)
             return cell
         }
         
-        cell.nameLabel.text = user.name
-        cell.bioLabel.text = user.bio
-        cell.loginLabel.text = user.login
-        cell.setReposNumber(user.publicRepos)
-        UIHelperGithubClient.setAvatarForUser(user, containerView: cell, imageView: cell.avatarImageView, activityIndicator: cell.avatarActivityIndicator, currentTag: cell.tag)
+        let cell = tableView.dequeueReusableCellWithIdentifier("NormalCell") as UITableViewCell
+        cell.textLabel.text = indexPath.row == 1 ? "Show \(user.login)'s page" : "Show \(user.login)'s repos"
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        var retVal = 1
+        retVal += user.htmlUrl != nil ? 1 : 0
+        return retVal
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var URLString: String? = nil
+        if indexPath.row == 1 {
+            if let URLString = user.htmlUrl {
+                var userInfo = [NSObject : AnyObject]()
+                userInfo[kNotificationGithubClientFromVCKey] = self
+                userInfo[kNotificationGithubClientToVCKey] = kNotificationGithubClientToVCValueWebView
+                userInfo[kNotificationGithubClientURLToOpenKey] = URLString
+                NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGithubClientShowWebView, object: nil, userInfo: userInfo)
+            }
+        }
     }
 
     // MARK: UIViewController Life Cycle
@@ -44,6 +66,7 @@ class UserViewController: UIViewController, UITableViewDataSource, UITableViewDe
         table.estimatedRowHeight = 100
         table.rowHeight = UITableViewAutomaticDimension
         table.registerNib(UINib(nibName: "UserViewCell", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "USER_VIEW_CELL")
+        table.registerClass(UITableViewCell.self, forCellReuseIdentifier: "NormalCell")
     }
     
     override func viewWillAppear(animated: Bool) {

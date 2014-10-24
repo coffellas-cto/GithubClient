@@ -15,6 +15,7 @@ class User: NSManagedObject {
     @NSManaged var avatarLocalPath: String?
     @NSManaged var avatarUrl: String?
     @NSManaged var htmlUrl: String?
+    @NSManaged var reposUrl: String?
     @NSManaged var id: NSNumber
     @NSManaged var login: String
     @NSManaged var publicRepos: NSNumber?

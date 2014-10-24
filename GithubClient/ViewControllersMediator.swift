@@ -14,6 +14,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
     private var splitVC: UISplitViewController!
     private var containerVC: UIViewController!
     private var menuVC: MenuViewController!
+    lazy private var webVC = WebViewController()
     lazy private var reposVC: ReposViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("REPOS_VC") as ReposViewController
     lazy private var usersVC: UsersViewController! = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USERS_VC") as UsersViewController
     //MARK: Public properties
@@ -37,6 +38,19 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
     }
     
     func showProfile() {
+    }
+    
+    func showWebView(notification: NSNotification) {
+        if let fromVC = notification.userInfo?[kNotificationGithubClientFromVCKey] as? UIViewController {
+            if let toVCString = notification.userInfo?[kNotificationGithubClientToVCKey] as? String {
+                if toVCString == kNotificationGithubClientToVCValueWebView {
+                    if let URLString = notification.userInfo?[kNotificationGithubClientURLToOpenKey] as? String {
+                        webVC.URLString = URLString
+                        fromVC.navigationController?.pushViewController(webVC, animated: true)
+                    }
+                }
+            }
+        }
     }
     
     // MARK: Class Properties
@@ -66,6 +80,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate {
         notCenter.addObserver(self, selector: "showRepos", name: kNotificationGithubClientShowRepos, object: nil)
         notCenter.addObserver(self, selector: "showUsers", name: kNotificationGithubClientShowUsers, object: nil)
         notCenter.addObserver(self, selector: "showProfile", name: kNotificationGithubClientShowProfile, object: nil)
+        notCenter.addObserver(self, selector: "showWebView:", name: kNotificationGithubClientShowWebView, object: nil)
         
         // Setup main View Controllers
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
