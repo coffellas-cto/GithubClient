@@ -23,7 +23,7 @@ class ReposViewController: BaseViewController, UITableViewDelegate, UITableViewD
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("REPO_CELL") as RepoCell
-
+        
         let repo = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as Repo!
         if repo == nil {
             return cell
@@ -32,6 +32,7 @@ class ReposViewController: BaseViewController, UITableViewDelegate, UITableViewD
         cell.nameLabel.text = repo.name
         cell.starsCountLabel.text = "\(repo.stargazersCount)"
         cell.languageLabel.text = repo.language
+        cell.languageView.alpha = repo.language == nil ? 0 : 1
         cell.descriptionLabel.text = repo.descriptionString
         cell.privateLabel.text = repo.isPrivate ? "Private" : "Public"
         

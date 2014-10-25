@@ -16,6 +16,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MENU_CELL") as UITableViewCell
+        cell.textLabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
         var title: String!
         switch indexPath.row {
         case 0:
