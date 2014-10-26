@@ -124,7 +124,7 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
         
         // Set up Split ViewController
         splitVC = UISplitViewController()
-        showUsers()
+        showProfile()
         splitVC.delegate = self
         
         if !isIPad {
