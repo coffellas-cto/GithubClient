@@ -35,6 +35,7 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
     
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Public Properties
     var user: User!
@@ -103,7 +104,9 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
                 textField.text = self.user.bio
             })
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                self.activityIndicator.startAnimating()
                 GithubNetworking.controller.updateUserBio((alertController.textFields?.first as UITextField).text, completion: { (responseDic, errorString) -> Void in
+                    self.activityIndicator.stopAnimating()
                     if errorString != nil {
                         UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK").show()
                         return
@@ -141,6 +144,7 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         
         super.viewWillAppear(animated)
         
+        activityIndicator.startAnimating()
         if user == nil {
             if currentUser {
                 GithubNetworking.controller.getCurrentUser({ (responseDic, errorString) -> Void in
@@ -149,18 +153,19 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
                         return
                     }
                     let g: AnyObject? = responseDic!["bio"]
-                    println("aaa: \(g)")
                     self.user = User.userFromNSDictionary(responseDic!)
-                    println("aaa: \(self.user.bio)")
+                    self.activityIndicator.stopAnimating()
                     self.table.reloadData()
                 })
             }
+            activityIndicator.stopAnimating()
             return
         }
         
         self.title = currentUser ? "Your info" : user.login + "'s info"
         GithubNetworking.controller.performRequestWithURLString(user.apiUrl, acceptJSONResponse: true, completion: { (data, errorString) -> Void in
             self.user = User.userFromJSONData(data)
+            self.activityIndicator.stopAnimating()
             self.table.reloadData()
         })
     }

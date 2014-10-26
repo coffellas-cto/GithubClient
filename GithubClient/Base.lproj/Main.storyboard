@@ -73,7 +73,7 @@
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-kx-q7A">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="color" red="0.49915832182320441" green="0.49915832182320441" blue="0.49915832182320441" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="color" red="0.43137254899999999" green="0.50588235290000005" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -122,7 +122,7 @@
                                 <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" id="EnL-6U-YEm">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="color" red="0.49915832180000003" green="0.49915832180000003" blue="0.49915832180000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="color" red="0.43137254899999999" green="0.50588235290000005" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="USER_CELL" id="JqT-m5-X3a" customClass="UserCell" customModule="GithubClient" customModuleProvider="target">
@@ -254,7 +254,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. A Ruby Framework" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNH-u0-UZt">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="e.g. iOS Framework" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sNH-u0-UZt">
                                                     <rect key="frame" x="112" y="13" width="480" height="17"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -378,16 +378,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="R2w-ZN-hXO">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="color" red="0.43137254899999999" green="0.50588235290000005" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="width" secondItem="R2w-ZN-hXO" secondAttribute="width" id="3I4-R7-Pwc"/>
                             <constraint firstItem="Yrz-x4-Upo" firstAttribute="top" secondItem="95a-Jc-BrP" secondAttribute="bottom" id="3l0-MZ-pMC"/>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="height" secondItem="R2w-ZN-hXO" secondAttribute="height" id="6YU-ga-1ae"/>
                             <constraint firstAttribute="trailing" secondItem="95a-Jc-BrP" secondAttribute="trailing" id="J4Y-22-r5U"/>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="centerY" secondItem="R2w-ZN-hXO" secondAttribute="centerY" id="KEO-Sj-a44"/>
                             <constraint firstItem="95a-Jc-BrP" firstAttribute="top" secondItem="MmJ-2I-FG4" secondAttribute="top" id="PXX-If-CQa"/>
+                            <constraint firstItem="95a-Jc-BrP" firstAttribute="centerX" secondItem="R2w-ZN-hXO" secondAttribute="centerX" id="fMw-hT-DGe"/>
                             <constraint firstItem="95a-Jc-BrP" firstAttribute="leading" secondItem="MmJ-2I-FG4" secondAttribute="leading" id="qpf-vA-X2b"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="R2w-ZN-hXO" id="Y86-B6-Gqh"/>
                         <outlet property="table" destination="95a-Jc-BrP" id="ah2-6U-c5P"/>
                     </connections>
                 </viewController>
