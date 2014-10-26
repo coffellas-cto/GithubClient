@@ -40,7 +40,9 @@ class NewRepoViewController: UITableViewController {
                     return
                 }
                 
-                println(responseDic)
+                UIAlertView(title: "Success", message: "Your new repo \"\(self.repoNameTextField.text!)\" is created", delegate: nil, cancelButtonTitle: "OK").show()
+                
+                self.navigationController?.popViewControllerAnimated(true)
             })
         }
     }

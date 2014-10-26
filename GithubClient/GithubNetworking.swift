@@ -98,11 +98,11 @@ class GithubNetworking: NetworkController {
         performRequestWithURLPath("/user/repos", method: "POST", parameters: parameters, acceptJSONResponse: true, sendBodyAsJSON: true) { (data, errorString) -> Void in
             self.processJSONData(data, errorString: errorString, completion: { (responseDic, errorString) -> Void in
                 if errorString != nil {
-                    UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK")
+                    completion(responseDic: nil, errorString: errorString)
                     return
                 }
                 
-                println(responseDic)
+                completion(responseDic: responseDic, errorString: nil)
             })
         }
     }
