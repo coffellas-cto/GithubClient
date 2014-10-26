@@ -15,7 +15,7 @@ class Repo: NSManagedObject {
     @NSManaged var name: String
     @NSManaged var fullName: String
     @NSManaged var isPrivate: Bool
-    @NSManaged var htmlUrl: String
+    @NSManaged var htmlUrl: String?
     @NSManaged var descriptionString: String?
     @NSManaged var updateDate: String
     @NSManaged var language: String?

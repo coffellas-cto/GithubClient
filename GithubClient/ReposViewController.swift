@@ -51,6 +51,23 @@ class ReposViewController: BaseViewController, UITableViewDelegate, UITableViewD
         return dataSourceArray.count
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let repo = CoreDataManager.manager.fetchObjectsWithEntityClass(Repo.classForCoder(), predicateFormat: "id == %@", dataSourceArray[indexPath.row])?.first as Repo!
+        if repo == nil {
+            return
+        }
+        
+        if let URLString = repo.htmlUrl {
+            var userInfo = [NSObject : AnyObject]()
+            userInfo[kNotificationGithubClientFromVCKey] = self
+            userInfo[kNotificationGithubClientToVCKey] = kNotificationGithubClientToVCValueWebView
+            userInfo[kNotificationGithubClientURLToOpenKey] = URLString
+            NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGithubClientShowWebView, object: nil, userInfo: userInfo)
+        }
+    }
+    
     // MARK: UISearchBarDelegate Methods
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

@@ -51,7 +51,7 @@ extension Repo {
                     retVal.id = Int64(id.integerValue)
                     retVal.name = dic["name"] as String
                     retVal.fullName = dic["full_name"] as String
-                    retVal.htmlUrl = dic["html_url"] as String
+                    retVal.htmlUrl = dic["html_url"] as? String
                     retVal.isPrivate = dic["private"] as Bool
                     retVal.language = dic["language"] as? String
                     retVal.stargazersCount = Int16(dic["stargazers_count"] as Int)
