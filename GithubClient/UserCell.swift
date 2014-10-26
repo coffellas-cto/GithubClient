@@ -14,10 +14,20 @@ class UserCell: UICollectionViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    func initViews() {
+        avatarImageView.image = nil
+        nameLabel.text = nil
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.avatarImageView.image = nil
-        self.nameLabel.text = nil
+        initViews()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        initViews()
+        avatarImageView.layer.cornerRadius = 8
     }
     
 }

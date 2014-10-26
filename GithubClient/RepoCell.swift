@@ -37,6 +37,7 @@ class RepoCell: UITableViewCell {
         // Initialization code
         initViews()
         languageView.layer.cornerRadius = 3
+        avatarImageView.layer.cornerRadius = 8
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

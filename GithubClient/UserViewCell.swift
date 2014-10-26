@@ -40,6 +40,7 @@ class UserViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         resetViews()
+        avatarImageView.layer.cornerRadius = 8
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

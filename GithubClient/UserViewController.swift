@@ -35,6 +35,8 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         }
         
         let cell = tableView.dequeueReusableCellWithIdentifier("NormalCell") as UITableViewCell
+        cell.accessoryType = .DisclosureIndicator
+        cell.textLabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
         switch indexPath.row {
         case 1:
             cell.textLabel.text = currentUser ? "Show your page" : "Show \(user.login)'s page"

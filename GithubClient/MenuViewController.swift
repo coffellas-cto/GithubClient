@@ -20,9 +20,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         var title: String!
         switch indexPath.row {
         case 0:
-            title = "Repos"
+            title = "Search Repos"
         case 1:
-            title = "Users"
+            title = "Search Users"
         case 2:
             title = "Profile"
         default:
