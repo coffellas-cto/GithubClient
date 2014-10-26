@@ -8,6 +8,16 @@
 
 import UIKit
 
+extension UIView {
+    func imageFromView() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0.0)
+        self.drawViewHierarchyInRect(self.bounds, afterScreenUpdates: false)
+        let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return snapshotImage
+    }
+}
+
 extension String {
     var valid: Bool {
         get {

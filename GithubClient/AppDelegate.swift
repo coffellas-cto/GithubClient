@@ -13,6 +13,15 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow!
     
+    // MARK: Private Methods
+    private func customizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor(red: 226/255, green: 234/255, blue: 237/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor(red: 116/255, green: 134/255, blue: 140/255, alpha: 1)
+        let font = UIFont(name: "", size: 12)
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: 9/255, green: 39/255, blue: 51/255, alpha: 1), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 20)!]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor(red: 116/255, green: 134/255, blue: 140/255, alpha: 1), NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 16)!], forState: .Normal)        
+    }
+    
     // MARK: UIApplication Life Cycle
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {        
         
@@ -25,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 GithubNetworking.controller.requestOAuthAccess()
             }
         }
+        
+        customizeAppearance()
         
         // Set up Window
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
