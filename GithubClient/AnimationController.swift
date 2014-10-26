@@ -13,7 +13,7 @@ enum AnimationType {
     case Pop
 }
 
-let kTransitionDuration: NSTimeInterval = 0.5
+let kTransitionDuration: NSTimeInterval = 0.7
 
 class AnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     var type: AnimationType?
@@ -41,15 +41,31 @@ class AnimationController: NSObject, UIViewControllerAnimatedTransitioning {
             fromVCUsers.selectedImageView?.alpha = 0
             toVCUser.selectedImageView?.alpha = 0
             
-            UIView.animateWithDuration(kTransitionDuration, animations: { () -> Void in
-                toVC.view.frame.origin = fromVC.view.frame.origin
-                tmpImageView.frame.origin = toVCUser.selectedImageViewOrigin
-            }) { (completed) -> Void in
+            // Apply blur effect
+            let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+            effectView.frame = CGRectMake(0, 0, fromVCUsers.view.frame.width, fromVCUsers.view.frame.height)
+            effectView.alpha = 0
+            fromVCUsers.view.addSubview(effectView)
+            
+            UIView.animateKeyframesWithDuration(kTransitionDuration, delay: 0, options: .allZeros, animations: { () -> Void in
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.4, animations: { () -> Void in
+                    effectView.alpha = 1
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.2, relativeDuration: 0.7, animations: { () -> Void in
+                    tmpImageView.frame.origin = toVCUser.selectedImageViewOrigin
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
+                    toVC.view.frame.origin = fromVC.view.frame.origin
+                })
+            }, completion: { (completed) -> Void in
+                effectView.removeFromSuperview()
                 toVCUser.selectedImageView?.alpha = 1
                 tmpImageView.removeFromSuperview()
                 fromVCUsers.selectedImageView?.alpha = 1
                 transitionContext.completeTransition(completed)
-            }
+            })
         }
         else {
             containerView.addSubview(fromVC.view)
@@ -67,15 +83,30 @@ class AnimationController: NSObject, UIViewControllerAnimatedTransitioning {
             fromVCUser.selectedImageView?.alpha = 0
             toVCUsers.selectedImageView?.alpha = 0
             
-            UIView.animateWithDuration(kTransitionDuration, animations: { () -> Void in
-                fromVC.view.frame.origin = CGPoint(x: fromVC.view.frame.width, y:fromVC.view.frame.origin.y)
-                tmpImageView.frame.origin = toVCUsers.selectedImageViewOrigin
-                }) { (completed) -> Void in
-                    toVCUsers.selectedImageView?.alpha = 1
-                    tmpImageView.removeFromSuperview()
-                    fromVCUser.selectedImageView?.alpha = 1
-                    transitionContext.completeTransition(completed)
-            }
+            // Apply blur effect
+            let effectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+            effectView.frame = CGRectMake(0, 0, toVCUsers.view.frame.width, toVCUsers.view.frame.height)
+            toVCUsers.view.addSubview(effectView)
+            
+            UIView.animateKeyframesWithDuration(kTransitionDuration, delay: 0, options: .allZeros, animations: { () -> Void in
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.5, animations: { () -> Void in
+                    fromVC.view.frame.origin = CGPoint(x: fromVC.view.frame.width, y:fromVC.view.frame.origin.y)
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0.7, animations: { () -> Void in
+                    tmpImageView.frame.origin = toVCUsers.selectedImageViewOrigin
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0.5, relativeDuration: 0.5, animations: { () -> Void in
+                    effectView.alpha = 0
+                })
+            }, completion: { (completed) -> Void in
+                effectView.removeFromSuperview()
+                toVCUsers.selectedImageView?.alpha = 1
+                tmpImageView.removeFromSuperview()
+                fromVCUser.selectedImageView?.alpha = 1
+                transitionContext.completeTransition(completed)
+            })
         }
     }
     
