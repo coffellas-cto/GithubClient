@@ -163,6 +163,10 @@ class NetworkController {
         let request = NSMutableURLRequest(URL: URL, cachePolicy: .UseProtocolCachePolicy, timeoutInterval: kGithubClientDefaultTimeout)
         request.HTTPMethod = method
         
+        if acceptJSONResponse {
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+        }
+        
         if parameters != nil {
             switch method {
             case "POST", "PUT", "DELETE":

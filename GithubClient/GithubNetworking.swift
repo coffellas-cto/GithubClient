@@ -147,6 +147,8 @@ class GithubNetworking: NetworkController {
                     }
                 }
                 
+                println(NSString(data: data, encoding: NSUTF8StringEncoding))
+                
                 UIAlertView(title: "Error", message: "Couldn't parse JSON data while receiving access token", delegate: nil, cancelButtonTitle: "OK").show()
                 return
                 
