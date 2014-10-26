@@ -11,6 +11,7 @@ import UIKit
 class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     // MARK: Private properties
+    private var isIPad = false
     private var splitVC: UISplitViewController!
     private var containerVC: UIViewController!
     private var navC: UINavigationController!
@@ -28,7 +29,9 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
     
     // MARK: Notifications
     func menuTapped() {
-        splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
+        if !isIPad {
+            splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
+        }
     }
     
     func showRepos() {
@@ -77,7 +80,9 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
         navC = UINavigationController(rootViewController: VCToShow)
         navC.delegate = self
         splitVC.viewControllers = [menuVC, navC]
-        splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryHidden
+        if !isIPad {
+            splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryHidden
+        }
     }
     
     // MARK: Navigation Controller Delegate
@@ -111,6 +116,8 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
         notCenter.addObserver(self, selector: "showProfile", name: kNotificationGithubClientShowProfile, object: nil)
         notCenter.addObserver(self, selector: "showWebView:", name: kNotificationGithubClientShowWebView, object: nil)
         
+        isIPad = UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        
         // Setup main View Controllers
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         menuVC = storyboard.instantiateViewControllerWithIdentifier("MENU_VC") as MenuViewController
@@ -119,8 +126,15 @@ class ViewControllersMediator: NSObject, UISplitViewControllerDelegate, UINaviga
         splitVC = UISplitViewController()
         showUsers()
         splitVC.delegate = self
-        splitVC.preferredPrimaryColumnWidthFraction = 0.8
-        splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
+        
+        if !isIPad {
+            splitVC.preferredPrimaryColumnWidthFraction = 0.8
+            splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.PrimaryOverlay
+        }
+        else {
+            splitVC.preferredPrimaryColumnWidthFraction = 0.25
+            splitVC.preferredDisplayMode = UISplitViewControllerDisplayMode.AllVisible
+        }
         
         // Set up container VirewController that uses Split ViewController
         containerVC = UIViewController()
