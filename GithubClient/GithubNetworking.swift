@@ -107,6 +107,12 @@ class GithubNetworking: NetworkController {
         }
     }
     
+    func updateUserBio(newBio: String, completion:(responseDic: NSDictionary?, errorString: String?) -> Void) {
+        performRequestWithURLPath("/user", method: "PATCH", parameters: ["bio": newBio], acceptJSONResponse: true, sendBodyAsJSON: true) { (data, errorString) -> Void in
+            self.processJSONData(data, errorString: errorString, completion:completion)
+        }
+    }
+    
     // MARK: Authorization stuff
     
     func setAccessToken(accessToken: String) {

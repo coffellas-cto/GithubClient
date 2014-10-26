@@ -36,7 +36,7 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!
     
-    // MARK: Public Methods
+    // MARK: Public Properties
     var user: User!
     var currentUser = false
     
@@ -63,6 +63,8 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         switch indexPath.row {
         case 1:
             cell.textLabel.text = currentUser ? "Show your page" : "Show \(user.login)'s page"
+        case 2:
+            cell.textLabel.text = "Edit bio"
         default:
             cell.textLabel.text = "Create new repo"
         }
@@ -76,7 +78,7 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
         }
         
         if currentUser {
-            retVal++
+            retVal += 2
         }
         
         return retVal
@@ -85,7 +87,9 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         var URLString: String? = nil
-        if indexPath.row == 1 {
+        
+        switch indexPath.row {
+        case 1:
             if let URLString = user.htmlUrl {
                 var userInfo = [NSObject : AnyObject]()
                 userInfo[kNotificationGithubClientFromVCKey] = self
@@ -93,7 +97,27 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
                 userInfo[kNotificationGithubClientURLToOpenKey] = URLString
                 NSNotificationCenter.defaultCenter().postNotificationName(kNotificationGithubClientShowWebView, object: nil, userInfo: userInfo)
             }
-        } else if indexPath.row == 2 {
+        case 2:
+            var alertController = UIAlertController(title: "Change bio", message: nil, preferredStyle: .Alert)
+            alertController.addTextFieldWithConfigurationHandler({ (textField) -> Void in
+                textField.text = self.user.bio
+            })
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                GithubNetworking.controller.updateUserBio((alertController.textFields?.first as UITextField).text, completion: { (responseDic, errorString) -> Void in
+                    if errorString != nil {
+                        UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK").show()
+                        return
+                    }
+                    
+                    UIAlertView(title: "Success", message: "Your bio is updated", delegate: nil, cancelButtonTitle: "OK").show()
+                    
+                    self.user.bio = responseDic!["bio"] as? String
+                    self.table.reloadData()
+                })
+            }))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        default:
             let newRepoVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("NEW_REPO_VC") as NewRepoViewController
             self.navigationController?.pushViewController(newRepoVC, animated: true)
         }
@@ -124,8 +148,10 @@ class UserViewController: BaseViewController, UITableViewDataSource, UITableView
                         UIAlertView(title: "Error", message: errorString, delegate: nil, cancelButtonTitle: "OK").show()
                         return
                     }
-                    
+                    let g: AnyObject? = responseDic!["bio"]
+                    println("aaa: \(g)")
                     self.user = User.userFromNSDictionary(responseDic!)
+                    println("aaa: \(self.user.bio)")
                     self.table.reloadData()
                 })
             }

@@ -169,7 +169,7 @@ class NetworkController {
         
         if parameters != nil {
             switch method {
-            case "POST", "PUT", "DELETE":
+            case "POST", "PUT", "DELETE", "PATCH":
                 var bodyData: NSData! = nil
                 if sendBodyAsJSON {
                     var error: NSError?
