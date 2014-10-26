@@ -10,6 +10,10 @@ import UIKit
 
 class UsersViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // MARK: Public Properties
+    var selectedImageView: UIImageView?
+    var selectedImageViewOrigin = CGPointZero
+    
     // MARK: Private Properties
     private var headerView: UsersCollectionHeaderView!
     private var isSearching = false
@@ -57,9 +61,14 @@ class UsersViewController: BaseViewController, UICollectionViewDelegate, UIColle
             return
         }
         
-        let userVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USER_VC") as UserViewController
-        userVC.user = user
-        self.navigationController?.pushViewController(userVC, animated: true)
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as UserCell? {
+            selectedImageView = cell.avatarImageView
+            selectedImageViewOrigin = collectionView.convertPoint(cell.frame.origin, toView: self.view)
+            
+            let userVC = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("USER_VC") as UserViewController
+            userVC.user = user
+            self.navigationController?.pushViewController(userVC, animated: true)
+        }
     }
     
     // MARK: UISearchBarDelegate Methods

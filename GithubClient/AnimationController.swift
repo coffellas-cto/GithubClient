@@ -13,6 +13,8 @@ enum AnimationType {
     case Pop
 }
 
+let kTransitionDuration: NSTimeInterval = 0.5
+
 class AnimationController: NSObject, UIViewControllerAnimatedTransitioning {
     var type: AnimationType?
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -20,46 +22,64 @@ class AnimationController: NSObject, UIViewControllerAnimatedTransitioning {
         let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) as UIViewController!
         let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as UIViewController!
         transitionContext.containerView().insertSubview(toVC!.view, belowSubview: fromVC.view)
+        let containerView = transitionContext.containerView()
         
-        //Set anchor points for the views
-        setAnchorPoint(CGPoint(x: type == .Push ? 1.0 : 0.0, y: 0.5), forView: toVC.view)
-        setAnchorPoint(CGPoint(x: type == .Push ? 0.0 : 1.0, y: 0.5), forView: fromVC.view)
-        
-        //Set appropriate z indexes
-        fromVC.view.layer.zPosition = 2.0
-        toVC.view.layer.zPosition = 1.0
-        
-        //90 degree transform away from the user
-        var t: CATransform3D = CATransform3DIdentity
-        t = CATransform3DRotate(t, CGFloat(M_PI / 2.0), 0.0, 1.0, 0.0)
-        t.m34 = 1.0 / -2000
-        
-        //Apply full transform to the 'to' view to start out with
-        toVC.view.layer.transform = t
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            fromVC.view.layer.transform = t;
-            toVC.view.layer.transform = CATransform3DIdentity;
-        }) { (completed) -> Void in
-            fromVC.view.layer.zPosition = 0.0
-            toVC.view.layer.zPosition = 0.0
-            transitionContext.completeTransition(completed)
+        if type == .Push {
+            containerView.addSubview(toVC.view)
+            
+            let fromVCUsers = fromVC as UsersViewController
+            let toVCUser = toVC as UserViewController
+            var tmpImageView = UIImageView(image: fromVCUsers.selectedImageView!.imageFromView())
+            tmpImageView.frame.origin = fromVCUsers.selectedImageViewOrigin
+            containerView.addSubview(tmpImageView)
+            
+            // Set toVC original frame
+            toVC.view.frame = containerView.frame
+            toVC.view.frame.origin = CGPoint(x: toVC!.view.frame.width, y:toVC!.view.frame.origin.y)
+            
+            // Set views initial values
+            fromVCUsers.selectedImageView?.alpha = 0
+            toVCUser.selectedImageView?.alpha = 0
+            
+            UIView.animateWithDuration(kTransitionDuration, animations: { () -> Void in
+                toVC.view.frame.origin = fromVC.view.frame.origin
+                tmpImageView.frame.origin = toVCUser.selectedImageViewOrigin
+            }) { (completed) -> Void in
+                toVCUser.selectedImageView?.alpha = 1
+                tmpImageView.removeFromSuperview()
+                fromVCUsers.selectedImageView?.alpha = 1
+                transitionContext.completeTransition(completed)
+            }
+        }
+        else {
+            containerView.addSubview(fromVC.view)
+            
+            let fromVCUser = fromVC as UserViewController
+            let toVCUsers = toVC as UsersViewController
+            var tmpImageView = UIImageView(image: fromVCUser.selectedImageView!.imageFromView())
+            tmpImageView.frame.origin = fromVCUser.selectedImageViewOrigin
+            containerView.addSubview(tmpImageView)
+            
+            // Set fromVC original frame
+            fromVC.view.frame = containerView.frame
+            
+            // Set views initial values
+            fromVCUser.selectedImageView?.alpha = 0
+            toVCUsers.selectedImageView?.alpha = 0
+            
+            UIView.animateWithDuration(kTransitionDuration, animations: { () -> Void in
+                fromVC.view.frame.origin = CGPoint(x: fromVC.view.frame.width, y:fromVC.view.frame.origin.y)
+                tmpImageView.frame.origin = toVCUsers.selectedImageViewOrigin
+                }) { (completed) -> Void in
+                    toVCUsers.selectedImageView?.alpha = 1
+                    tmpImageView.removeFromSuperview()
+                    fromVCUser.selectedImageView?.alpha = 1
+                    transitionContext.completeTransition(completed)
+            }
         }
     }
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        return 0.3
-    }
-    
-    func setAnchorPoint(point: CGPoint, forView view: UIView) {
-        let oldOrigin = view.frame.origin
-        view.layer.anchorPoint = point;
-        let newOrigin = view.frame.origin
-        
-        var transitionPoint = CGPointZero
-        transitionPoint.x = newOrigin.x - oldOrigin.x
-        transitionPoint.y = oldOrigin.y - oldOrigin.y
-        
-        view.center = CGPointMake (view.center.x - transitionPoint.x, view.center.y - transitionPoint.y)
+        return kTransitionDuration
     }
 }

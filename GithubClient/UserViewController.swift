@@ -10,6 +10,29 @@ import UIKit
 
 class UserViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: Public Properties
+    var selectedImageView: UIImageView? {
+        get {
+            if let cell = table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? UserViewCell {
+                return cell.avatarImageView
+            }
+            
+            return nil
+        }
+    }
+    var selectedImageViewOrigin: CGPoint {
+        get {
+            if let cell = table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? UserViewCell {
+                var retVal = table.convertPoint(cell.frame.origin, toView: self.view)
+                retVal.x += 8
+                retVal.y += 8
+                return retVal
+            }
+            
+            return CGPointZero
+        }
+    }
+    
     // MARK: Outlets
     @IBOutlet weak var table: UITableView!
     
